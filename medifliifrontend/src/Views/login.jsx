@@ -98,6 +98,7 @@ export default function LogIn() {
                 title="Inicia sesión con Google"
               >
                 <input
+                
                   type="image"
                   className="socialNetwork"
                   src="images/logos/google-logo.png"

@@ -4,10 +4,12 @@ import './App.css';
 import LogIn from './Views/login';
 import SignUp from './Views/SignUp';
 import Header from './Components/Header';
-import Profile from './Views/Estadistica/Profile';
-import FormCreateProfile from './Components/Profiles/FormCreateProfile';
-import FormDeleteProfile from './Components/Profiles/FormDeleteProfile';
-import FormUpdateProfile from './Components/Profiles/FormUpdateProfile';
+
+import Language from './Views/Estadistica/Language';
+import FormCreateLanguage from './Components/Languages/FormCreateLanguage';
+import FormDeleteLanguage from './Components/Languages/FormDeleteLanguage';
+import FormUpdateLanguage from './Components/Languages/FormUpdateLanguage';
+
 
 function App() {
   
@@ -22,14 +24,21 @@ function App() {
                         <Route path='/app'>
                     
                         {/* <Route path="/search" element={<PagBusqueda/>} /> */}
+                </Route>
+
+                    
+                        <Route path='/app'>
+                        
                         <Route path="login" element={<LogIn />} /> 
-                        <Route path="profiles" element={<Profile />} > 
+                        <Route path="languages" element={<Language />} > 
+                          
                         </Route>
-                        <Route path='profiles/create' element={<FormCreateProfile/>}/>
-                        <Route path='profiles/delete' element={<FormDeleteProfile/>}/>
-                        <Route path='profiles/update' element={<FormUpdateProfile/>}/>
-                        <Route path="signup" element={<SignUp/>} />
+                        <Route path='languages/create' element={<FormCreateLanguage/>}/>
+                        <Route path='languages/delete' element={<FormDeleteLanguage/>}/>
+                        <Route path='languages/update' element={<FormUpdateLanguage/>}/>
+                        <Route path="signup" element={<SignUp/>} /> 
                         </Route>
+                        
                     </Routes>
 
                 </BrowserRouter>
