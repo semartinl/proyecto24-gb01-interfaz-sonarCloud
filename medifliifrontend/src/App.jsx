@@ -4,10 +4,12 @@ import './App.css';
 import LogIn from './Views/login';
 import SignUp from './Views/SignUp';
 import Header from './Components/Header';
+
 import Language from './Views/Estadistica/Language';
 import FormCreateLanguage from './Components/Languages/FormCreateLanguage';
 import FormDeleteLanguage from './Components/Languages/FormDeleteLanguage';
 import FormUpdateLanguage from './Components/Languages/FormUpdateLanguage';
+
 
 function App() {
   
@@ -19,9 +21,11 @@ function App() {
                 
                     <Routes>
                         {/* <Route path="/" element={<Index/>} /> */}
-                    
+                        <Route path='/app'>
                     
                         {/* <Route path="/search" element={<PagBusqueda/>} /> */}
+                </Route>
+
                     
                         <Route path='/app'>
                         
