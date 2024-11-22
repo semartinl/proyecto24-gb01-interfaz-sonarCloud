@@ -10,6 +10,16 @@ import FormCreateLanguage from './Components/Languages/FormCreateLanguage';
 import FormDeleteLanguage from './Components/Languages/FormDeleteLanguage';
 import FormUpdateLanguage from './Components/Languages/FormUpdateLanguage';
 
+import Profile from './Views/Estadistica/Profile';
+import FormCreateProfile from './Components/Profiles/FormCreateProfile';
+import FormDeleteProfile from './Components/Profiles/FormDeleteProfile';
+import FormUpdateProfile from './Components/Profiles/FormUpdateProfile';
+
+import User from './Views/Estadistica/User';
+import FormCreateUser from './Components/Users/FormCreateUsers';
+import FormDeleteUser from './Components/Users/FormDeleteUsers';
+import FormUpdateUser from './Components/Users/FormUpdateUsers';
+
 
 function App() {
   
@@ -31,11 +41,20 @@ function App() {
                         
                         <Route path="login" element={<LogIn />} /> 
                         <Route path="languages" element={<Language />} > 
-                          
+                        </Route>
+                        <Route path="profiles" element={<Profile />} > 
+                        </Route>
+                        <Route path="users" element={<Users />} > 
                         </Route>
                         <Route path='languages/create' element={<FormCreateLanguage/>}/>
                         <Route path='languages/delete' element={<FormDeleteLanguage/>}/>
                         <Route path='languages/update' element={<FormUpdateLanguage/>}/>
+                        <Route path='profiles/create' element={<FormCreateProfile/>}/>
+                        <Route path='profiles/delete' element={<FormDeleteProfile/>}/>
+                        <Route path='profiles/update' element={<FormUpdateProfile/>}/>
+                        <Route path='users/create' element={<FormCreateUser/>}/>
+                        <Route path='users/delete' element={<FormDeleteUser/>}/>
+                        <Route path='users/update' element={<FormUpdateUser/>}/>
                         <Route path="signup" element={<SignUp/>} /> 
                         </Route>
                         
