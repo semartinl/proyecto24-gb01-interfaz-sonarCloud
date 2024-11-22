@@ -11,7 +11,7 @@ export default function FormCreateProfile() {
     const handleSubmitPostProfile = async (event)=>{
         
         event.preventDefault();
-        const response = await profilesService.addProfile(nombre).catch((error)=>{
+        const response = await profilesService.addProfile(nombre,pin,idUser,idLanguage).catch((error)=>{
             setError(error.message)
         })
     }
