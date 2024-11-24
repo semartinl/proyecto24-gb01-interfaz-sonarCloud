@@ -21,3 +21,10 @@
 .button-redondeado{
     border-radius: 20px;
 }
+
+.section-header-topbar{
+    display: flex;
+    width: 600px;
+    justify-content: space-between;
+    
+}

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { constComunes } from '../Config/constantesComunes';
+import { constantesComunes } from '../Config/constantesComunes';
 
-const API_URL = constComunes.URLAPI;
+const API_URL = constantesComunes.URL_Usuarios;
 const path = "profiles";
 
 const profilesService = {

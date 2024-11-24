@@ -1,6 +1,39 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import usersService from '../Controller/userController';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 
 export default function LogIn() {
+  const navigate = useNavigate()
+  const [error, setError] = useState(null)
+  const {user, setUser,isLoggedIn,setIsLoggedIn} = useContext(UserContext)
+  useEffect(()=>{
+    const response = usersService.getAllUsers()
+    console.log(response)
+  })
+  const handleLogIn = (event)=>{
+    event.preventDefault();
+
+    var userLogIn = {
+      "username": event.target.email.value,
+      "email": event.target.email.value,
+      "password": event.target.password.value
+    }
+    console.log(userLogIn)
+    usersService.userLogin(userLogIn).then((response)=>{
+      setUser(response)
+				
+				setIsLoggedIn(true)
+      window.localStorage.setItem("User",JSON.stringify(response))
+      console.log(response)
+      navigate("/app/profiles")
+    }).catch((error)=>{
+      if(error.status === 404){
+        alert("Invalid username or password");
+      setError("Invalid username or password")
+      }
+    })
+  }
   return (
     <>
   <title>Medifli.com</title>
@@ -26,10 +59,11 @@ export default function LogIn() {
           <h5>
             <b>Inicia sesión o crea una cuenta</b>
           </h5>
-          <form method="post">
-            <label htmlFor="loginEmail"> E-mail </label>
+           {error? error:null}
+          <form method="post" onSubmit={handleLogIn}>
+            <label htmlFor="loginEmail"> Usuario </label>
             <input
-              type="email"
+              type="text"
               name="email"
               className="loginBox"
               autoComplete="on"
@@ -43,7 +77,7 @@ export default function LogIn() {
               type="password"
               name="password"
               className="loginBox"
-              id="psswrd"
+              id="password"
               style={{ marginBottom: 18 }}
               size={46}
               placeholder="Indica tu contraseña"
@@ -52,7 +86,7 @@ export default function LogIn() {
             <input
               type="checkbox"
               className="passwordBox"
-              onclick="mostratContrasena()"
+              
             />
             Mostrar contraseña
             <input
