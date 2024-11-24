@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import chaptersService from '../../Controller/chapterController';
 
-export default function GetChapterById () {
+export default function FormGetChapterById () {
     const [idChapter, setIdChapter] = useState('');
     const [chapter, setChapter] = useState(null);
     const [message, setMessage] = useState('');

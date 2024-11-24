@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import reviewsService from '../../Controller/reviewController';
 
-export default function AddReview () {
+export default function FormCreateReview () {
     const [review, setReview] = useState({
         idProfile: '',
         idContent: '',

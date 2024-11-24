@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import categoriesService from '../../Controller/categoryController';
 
-export default function AddCategory () {
+export default function FormCreateCategory () {
     const [name, setName] = useState('');
 
     // Maneja el envío del formulario

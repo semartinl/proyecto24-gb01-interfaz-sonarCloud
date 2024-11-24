@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import categoriesService from '../../Controller/categoryController';
 
-export default function GetAllCategories () {
+export default function FormGetAllCategories () {
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState('');
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import chaptersService from '../../Controller/chapterController';
 
-export default function UpdateChapter () {
+export default function FormUpdateChapter () {
     const [formData, setFormData] = useState({
         idChapter: '',
         title: '',

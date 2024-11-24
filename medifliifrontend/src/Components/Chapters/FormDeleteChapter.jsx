@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import chaptersService from '../../Controller/chapterController';
 
-export default function  DeleteChapter () {
+export default function  FormDeleteChapter () {
     const [idChapter, setIdChapter] = useState('');
     const [message, setMessage] = useState('');
 
