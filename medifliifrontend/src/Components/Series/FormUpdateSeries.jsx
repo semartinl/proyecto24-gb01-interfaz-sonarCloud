@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import seriesService from '../../Controller/seriesController';
 
 export default function ModifySeriesForm () {
+  const [seriesId, setSeriesId] = useState(null);
   // Estado para almacenar los valores del formulario
   const [formData, setFormData] = useState({
     idSeries: seriesId || '',
