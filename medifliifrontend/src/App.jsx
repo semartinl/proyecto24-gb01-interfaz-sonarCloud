@@ -16,36 +16,37 @@ import FormDeleteProfile from './Components/Profiles/FormDeleteProfile';
 import FormUpdateProfile from './Components/Profiles/FormUpdateProfile';
 
 import User from './Views/Estadistica/User';
-import FormCreateUser from './Components/Users/FormCreateUsers';
-import FormDeleteUser from './Components/Users/FormDeleteUsers';
-import FormUpdateUser from './Components/Users/FormUpdateUsers';
+import FormCreateUser from './Components/Users/FormCreateUser';
+import FormDeleteUser from './Components/Users/FormDeleteUser';
+import FormUpdateUser from './Components/Users/FormUpdateUser';
+import { UserContextProvider } from './context/UserContext';
+import Configuración from './Views/User/Configuración';
+import ConfirmDeleteUser from './Views/User/ConfirmDeleteUser';
 
 
 function App() {
   
   return (
+    <UserContextProvider>
+    
     <BrowserRouter>
                   <Header />
                     
                     
                 
                     <Routes>
-                        {/* <Route path="/" element={<Index/>} /> */}
-                        <Route path='/app'>
+                      <Route path="/app" > 
+                        
                     
-                        {/* <Route path="/search" element={<PagBusqueda/>} /> */}
-                </Route>
-
-                    
-                        <Route path='/app'>
+                        
                         
                         <Route path="login" element={<LogIn />} /> 
+                        <Route path="signup" element={<SignUp/>} /> 
                         <Route path="languages" element={<Language />} > 
                         </Route>
-                        <Route path="profiles" element={<Profile />} > 
-                        </Route>
-                        <Route path="users" element={<Users />} > 
-                        </Route>
+                        <Route path="profiles" element={<Profile />} /> 
+                        
+                        
                         <Route path='languages/create' element={<FormCreateLanguage/>}/>
                         <Route path='languages/delete' element={<FormDeleteLanguage/>}/>
                         <Route path='languages/update' element={<FormUpdateLanguage/>}/>
@@ -53,14 +54,19 @@ function App() {
                         <Route path='profiles/delete' element={<FormDeleteProfile/>}/>
                         <Route path='profiles/update' element={<FormUpdateProfile/>}/>
                         <Route path='users/create' element={<FormCreateUser/>}/>
-                        <Route path='users/delete' element={<FormDeleteUser/>}/>
-                        <Route path='users/update' element={<FormUpdateUser/>}/>
-                        <Route path="signup" element={<SignUp/>} /> 
-                        </Route>
+                        <Route path='user/config' element={<Configuración/>}/>
+                        <Route path='deleteUser' element={<FormDeleteUser/>}/>
+                        <Route path='users/config/saved' element={<h1>MI LISTA DE GUARDADOS</h1>}/>
+                        <Route path='user/config/editUser' element={<FormUpdateUser/>}/>
                         
+                        <Route path='user/config/deleteUser' element={<ConfirmDeleteUser/>}/>
+                        
+                      </Route>
+                    
                     </Routes>
 
                 </BrowserRouter>
+    </UserContextProvider>
   );
 }
 
