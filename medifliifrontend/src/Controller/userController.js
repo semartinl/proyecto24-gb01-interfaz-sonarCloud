@@ -23,9 +23,9 @@ const usersService = {
     formData.append("email", email);
     formData.append("password", password);
     
-        const response = await axios.post(`${API_URL}${path}`, {
-            formData,
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        const response = await axios.post(`${API_URL}${path}`, formData,{
+            
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
         console.log(formData.toString())
     // let href = usersService.createSearchURL(`${API_URL}${path}`, formData.toString())

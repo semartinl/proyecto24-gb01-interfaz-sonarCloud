@@ -44,6 +44,7 @@ export default function Header() {
           </>
           :
           <>
+          <NavLink to = "/app/user/config"> Mi cuenta</NavLink>
           <NavLink to="/app/login"> Inicio de sesión</NavLink>
             <NavLink to="/app/signup"> Registrarse</NavLink>
 

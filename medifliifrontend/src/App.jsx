@@ -51,6 +51,8 @@ import AddTrailer from './Components/Trailers/FormCreateTrailer';
 import DeleteTrailer from './Components/Trailers/FormDeleteTrailer';
 import UpdateTrailer from './Components/Trailers/FormUpdateTrailer';
 import GetTrailerById from './Components/Trailers/FormGetTrailerByID';
+import VerPerfil from './Views/User/VerPerfil';
+import { RequireAuth } from './Config/requireAuth';
 
 
 function App() {
@@ -71,6 +73,9 @@ function App() {
                         
                         <Route path="login" element={<LogIn />} /> 
                         <Route path="signup" element={<SignUp/>} /> 
+                        <Route path='/app/' element={<RequireAuth />}>
+                        
+                        
                         <Route path="languages" element={<Language />} > 
                         </Route>
                         <Route path="profiles" element={<Profile />} /> 
@@ -86,6 +91,7 @@ function App() {
                         <Route path='user/config' element={<Configuración/>}/>
                         <Route path='deleteUser' element={<FormDeleteUser/>}/>
                         <Route path='users/config/saved' element={<h1>MI LISTA DE GUARDADOS</h1>}/>
+                        <Route path='user/config/myProfile' element={<VerPerfil/>}/>
                         <Route path='user/config/editUser' element={<FormUpdateUser/>}/>
                         
                         <Route path='user/config/deleteUser' element={<ConfirmDeleteUser/>}/>
@@ -94,7 +100,7 @@ function App() {
     <Route path="languages/create" element={<FormCreateLanguage />} />
     <Route path="languages/delete" element={<FormDeleteLanguage />} />
     <Route path="languages/update" element={<FormUpdateLanguage />} />
-    <Route path="languages" element={<Language />} />
+    <Route exact path="languages" element={<Language />} />
 
     {/* Profiles */}
     <Route path="profiles/create" element={<FormCreateProfile />} />
@@ -148,7 +154,7 @@ function App() {
     <Route path="trailers/update" element={<UpdateTrailer />} />
     <Route path="trailers" element={<GetTrailerById />} />
                       </Route>
-                    
+                    </Route>
                     </Routes>
 
                 </BrowserRouter>
