@@ -31,11 +31,19 @@ export default function SignUp() {
       "email": form.email.value,
       "password": form.password.value
     }
-    
-    usersService.addUserForm(form.name.value,form.surname.value,form.username.value,form.email.value,form.password.value ).then((response)=>{
+    if(form.password.value !== form.repeatedPassword.value){
+      setError("Las contraseñas no coinciden")
+    }
+    else{
+      usersService.addUserForm(addUser.name,addUser.surname,addUser.username,addUser.email,addUser.password).then((response)=>{
       alert("Usuario creado con éxito")
-      navigate("/app")
+      navigate("/app/login")
     })
+    }
+
+    
+    
+    
   }
   return (
     <>
@@ -47,32 +55,6 @@ export default function SignUp() {
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
-  <header className="container-fluid headerMedifli p-3">
-    <div className="centerReservation">
-      <img
-        src="assets/icons/medifli_sin_fondo_2.png"
-        title="Logo de Mediflí"
-        height={40}
-        alt="M de Mediflí"
-      />
-      <input
-        type="image"
-        src="../assets/icons/help.png"
-        className="right-header"
-        height={40}
-        alt="Ayuda"
-        title="Ayuda"
-      />
-      <input
-        type="image"
-        src="../assets/icons/es-circle.png"
-        className="right-header margin_right_header"
-        height={40}
-        alt="Bandera_idioma"
-        title="Selecciona tu idioma"
-      />
-    </div>
-  </header>
   <fieldset className="loginContainer headerMedifli whiteLetters">
     <div>
       <h5>
@@ -90,7 +72,7 @@ export default function SignUp() {
             className="loginBox"
             size={46}
             placeholder="Introduce tu nombre"
-            required=""
+            required
             name="name"
             id='name'
           />
@@ -105,6 +87,7 @@ export default function SignUp() {
             placeholder="Introduce tu apellido"
             name="surname"
             id = "surname"
+            required
           />
           <label htmlFor="username" className="loginLables">
             
@@ -116,6 +99,7 @@ export default function SignUp() {
             size={46}
             placeholder="Introduce tu apellido"
             name="username"
+            required
             id= "username"
           />
           <label htmlFor="email" className="loginLables">
@@ -128,8 +112,9 @@ export default function SignUp() {
             className="loginBox"
             size={46}
             placeholder="Introduce tu e-mail"
-            required=""
+            
             name="email"
+            required
             id="email"
           />
           <label htmlFor="password" className="loginLables">
@@ -138,18 +123,16 @@ export default function SignUp() {
           </label>
           <span style={{ color: "#FF672C" }}>*</span>
           <input
-            type="text"
+            type="password"
             id="password"
             className="loginBox"
             size={46}
             placeholder="Introduce tu contraseña"
-            required=""
+            required
             name="password"
             min={4}
           />
-          <p className="small-font">
-            ${"{"}errorMessage{"}"}
-          </p>
+          
           <div>
             <label htmlFor="repeatedPassword" className="loginLables">
               {" "}
@@ -157,12 +140,12 @@ export default function SignUp() {
             </label>
             <span style={{ color: "#FF672C" }}>*</span>
             <input
-              type="text"
+              type="password"
               id="repeatedPassword"
               className="loginBox"
               size={46}
               placeholder="Confirma tu contraseña"
-              required=""
+              required
               name="repeatedPassword"
             />
             <p />
@@ -176,9 +159,10 @@ export default function SignUp() {
               value={"Crear usuario"}
             />
           </div>
-          <p className="small-font" style={{ textAlign: "center" }}>
-            ${"{"}errorMessage2{"}"}
-          </p>
+          {error? <p className="small-font" style={{ textAlign: "center" }}>
+            {error} </p>: null}
+          
+          
         </form>
       </div>
     </div>

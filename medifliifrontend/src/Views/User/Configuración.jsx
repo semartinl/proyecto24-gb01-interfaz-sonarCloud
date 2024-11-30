@@ -13,21 +13,9 @@ export default function Configuración() {
                 </section>
                 
                 <section className="card-perfil">
-                    <h2>Tus alojamientos favoritos</h2>
-                    <p>Revisa todos tus alojamientos favoritos</p>
-                    <NavLink to="saved">Ver mis alojamientos favoritos</NavLink>
-                </section>
-                
-                <section className="card-perfil">
-                    <h2>Mis propiedades registradas</h2>
-                    <p>Gestiona, actualiza y revisa toda la información acerca de tus apartamentos favoritos</p>
-                    <NavLink to="mis-alojamientos">Gestionar mis alojamientos</NavLink>
-                </section>
-                
-                <section className="card-perfil">
-                    <h2>Mis reservas</h2>
-                    <p>Recuerda y revisa tus reservas realizadas</p>
-                    <NavLink to="/">Ver mis reservas</NavLink>
+                    <h2>Ver mi perfil</h2>
+                    <p>Mira la información que tienes configurada.</p>
+                    <NavLink to="myProfile">Ver perfil</NavLink>
                 </section>
                 
                 <section className="card-perfil">

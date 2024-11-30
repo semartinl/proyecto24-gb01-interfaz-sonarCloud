@@ -44,15 +44,7 @@ export default function LogIn() {
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
-  <div className="parent-container">
-    <div className="child-div">
-      <img
-        src="images/Icons/medifli_sin_fondo_2.png"
-        title="Logo de Mediflí"
-        height={150}
-        alt="M de Mediflí"
-      />
-    </div>
+
     <div className="child-div">
       <fieldset className="loginContainer headerMedifli whiteLetters">
         <div>
@@ -174,7 +166,6 @@ export default function LogIn() {
         </div>
       </fieldset>
     </div>
-  </div>
 </>
   )
 }
