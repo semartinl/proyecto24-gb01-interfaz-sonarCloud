@@ -53,13 +53,16 @@ import UpdateTrailer from './Components/Trailers/FormUpdateTrailer';
 import GetTrailerById from './Components/Trailers/FormGetTrailerByID';
 import VerPerfil from './Views/User/VerPerfil';
 import { RequireAuth } from './Config/requireAuth';
+import SelectProfile from './Views/User/Profiles/SelectProfile';
+import { ProfileContextProvider } from './context/ProfileContext';
+import DeleteProfile from './Views/User/Profiles/DeleteProfile';
 
 
 function App() {
   
   return (
     <UserContextProvider>
-    
+    <ProfileContextProvider>
     <BrowserRouter>
                   <Header />
                     
@@ -76,24 +79,26 @@ function App() {
                         <Route path='/app/' element={<RequireAuth />}>
                         
                         
+                        
+                        
                         <Route path="languages" element={<Language />} > 
                         </Route>
                         <Route path="profiles" element={<Profile />} /> 
+                        <Route path="profiles/selectProfile" element={<SelectProfile />} />
+                        <Route path='user/config/profiles/createProfile' element={<FormCreateProfile/>}/>
                         
                         
                         <Route path='languages/create' element={<FormCreateLanguage/>}/>
                         <Route path='languages/delete' element={<FormDeleteLanguage/>}/>
                         <Route path='languages/update' element={<FormUpdateLanguage/>}/>
-                        <Route path='profiles/create' element={<FormCreateProfile/>}/>
-                        <Route path='profiles/delete' element={<FormDeleteProfile/>}/>
-                        <Route path='profiles/update' element={<FormUpdateProfile/>}/>
                         <Route path='users/create' element={<FormCreateUser/>}/>
                         <Route path='user/config' element={<Configuración/>}/>
                         <Route path='deleteUser' element={<FormDeleteUser/>}/>
                         <Route path='users/config/saved' element={<h1>MI LISTA DE GUARDADOS</h1>}/>
                         <Route path='user/config/myProfile' element={<VerPerfil/>}/>
+                        <Route path='user/config/editProfile' element={<FormUpdateProfile/>}/>
                         <Route path='user/config/editUser' element={<FormUpdateUser/>}/>
-                        
+                        <Route path='user/config/profiles/deleteProfile' element={<DeleteProfile/>}/>
                         <Route path='user/config/deleteUser' element={<ConfirmDeleteUser/>}/>
                         
                         {/* Languages */}
@@ -158,6 +163,7 @@ function App() {
                     </Routes>
 
                 </BrowserRouter>
+    </ProfileContextProvider>
     </UserContextProvider>
   );
 }

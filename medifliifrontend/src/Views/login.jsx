@@ -26,7 +26,7 @@ export default function LogIn() {
 				setIsLoggedIn(true)
       window.localStorage.setItem("User",JSON.stringify(response))
       console.log(response)
-      navigate("/app/profiles")
+      navigate("/app/profiles/selectProfile")
     }).catch((error)=>{
       if(error.status === 404){
         alert("Invalid username or password");
