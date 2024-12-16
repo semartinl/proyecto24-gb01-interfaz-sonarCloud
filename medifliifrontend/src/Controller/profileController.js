@@ -5,58 +5,54 @@ const API_URL = constantesComunes.URL_Usuarios;
 const path = "profiles";
 
 const profilesService = {
-    // Crear un nuevo perfil
-    addProfile: async (profile) => {
-        const formData = new URLSearchParams();
-    formData.append("name", profile);
-    formData.append("pin", profile);
-    formData.append("idUser", profile);
-    formData.append("idLanguage", profile);
-        const response = await axios.post(`${API_URL}${path}`, profile, {
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    });
-        return response;
-    },
-
-    // Obtener todos los perfiles
+    // Obtener todos los perfiles de un usuario
     getAllProfiles: async () => {
-        const response = await axios.get(`${API_URL}${path}`);
+        const response = await axios.get(`${API_URL}${path}`, {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true, // Para incluir cookies en la solicitud
+        });
+        return response.data;
+    },
+    getProfilesByUserId: async (userId) => {
+        const response = await axios.get(`${API_URL}${path}/user/${userId}`, {
+            headers: { 'Content-Type': 'application/json' },
+            // withCredentials: true, // Para incluir cookies en la solicitud
+        });
         return response.data;
     },
 
     // Obtener un perfil por ID
     getProfileById: async (idProfile) => {
-        const response = await axios.get(`${API_URL}${path}/${idProfile}`);
-        return response.data;
-    },
-
-    // Actualizar un perfil
-    putProfile: async (idProfile, name, pin, idLanguage) => {
-        const formData = new URLSearchParams();
-        formData.append("idProfile", idProfile);
-        formData.append("name", name);
-        formData.append("pin", pin);
-        formData.append("idLanguage", idLanguage);
-
-        const response = await axios.put(`${API_URL}${path}`, formData, {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+        const response = await axios.get(`${API_URL}${path}/${idProfile}`, {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true, // Para incluir cookies en la solicitud
         });
         return response.data;
     },
 
-    // Eliminar un perfil
-    deleteProfile: async (idProfile) => {
-        const response = await axios.delete(`${API_URL}${path}/${idProfile}`);
+    // Crear un nuevo perfil
+    addProfile: async (profileData) => {
+        const response = await axios.post(`${API_URL}${path}`, profileData, {
+            headers: { 'Content-Type': 'application/json' },
+            // withCredentials: true, // Para incluir cookies en la solicitud
+        });
         return response.data;
     },
-    deleteProfileForm: async (idProfile) => {
-        const formData = new URLSearchParams();
-        formData.append("idProfile", idProfile);
-        
 
-        const response = await axios.delete(`${API_URL}${path}`, {
-            data: formData,
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+    // Actualizar un perfil por ID
+    updateProfileById: async (idProfile, profileData) => {
+        const response = await axios.put(`${API_URL}${path}/${idProfile}`, profileData, {
+            headers: { 'Content-Type': 'application/json'}
+            // withCredentials: true, // Para incluir cookies en la solicitud
+        });
+        return response.data;
+    },
+
+    // Eliminar un perfil por ID
+    deleteProfileById: async (idProfile) => {
+        const response = await axios.delete(`${API_URL}${path}/${idProfile}`, {
+            headers: { 'Content-Type': 'application/json' },
+            // withCredentials: true, // Para incluir cookies en la solicitud
         });
         return response.data;
     }

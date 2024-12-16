@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import profilesService from '../../Controller/profileController';
 import FormCreateProfile from '../../Components/Profiles/FormCreateProfile';
 
-export default function Profile({}) {
+export default function Profile({listProfiles}) {
     const [profiles, setProfiles] = useState([]);
     useEffect(()=>{
         profilesService.getAllProfiles((response)=>{

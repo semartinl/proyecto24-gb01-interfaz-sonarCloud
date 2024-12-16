@@ -1,75 +1,50 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import profilesService from '../../Controller/profileController';
+import UserContext from '../../context/UserContext';
+import { Navigate, useNavigate, useRoutes } from 'react-router-dom';
 
 export default function FormCreateProfile() {
     const [nombre, setNombre] = useState("");
     const [pin, setPin] = useState("");
-    const [idUser, setIdUser] = useState("");
-    const [idLanguage, setIdLanguage] = useState("");
+    // const [idUser, setIdUser] = useState("");
+    // const [idLanguage, setIdLanguage] = useState("");
     const [error, setError] = useState(null);
-
+    const {user, setUser,isLoggedIn,setIsLoggedIn} = useContext(UserContext)
+    const navigate = useNavigate()
     const handleSubmitPostProfile = async (event)=>{
-        
+        const newProfile = {
+          "id-profile": 1,
+          "idUser": user.idUser,
+          "profileName": nombre,
+          "Pin": pin
+        }
+        console.log(newProfile)
         event.preventDefault();
-        const response = await profilesService.addProfile(nombre,pin,idUser,idLanguage).catch((error)=>{
+        await profilesService.addProfile(newProfile).then((response)=>{
+          console.log(response)
+          navigate("/app/profiles/selectProfile")
+        }).catch((error)=>{
             setError(error.message)
         })
     }
   return (
     <>
     
-    <div className="card-header">
-            <h5 className="text-center">Insertar ProfileUser</h5>
-          </div>
-          <div className="card-body">
-          {error? <p>{error}</p> : null}
-            <form onSubmit={handleSubmitPostProfile}>
-              <label>Nombre del Profile</label>
-              <input
-                type="text"
-                className="form-control mb-3"
-                name="name"
-                required=""
-                onChange={(e)=> setNombre(e.target.value)}
-              />
-              <br />
-              <br />
-              <label>PIN del Profile</label>
-              <input
-                type="number"
-                className="form-control mb-3"
-                name="pin"
-                required=""
-                onChange={(e)=> setPin(e.target.value)}
-              />
-              <br />
-              <br />
-              <label>¿A qué usuario se asocia este perfil?</label>
-              <input
-                type="number"
-                className="form-control mb-3"
-                name="idUser"
-                required=""
-                onChange={(e)=> setIdUser(e.target.value)}
-              />
-              <br />
-              <br />
-              <label>¿Qué idioma quieres usar?</label>
-              <input
-                type="number"
-                className="form-control mb-3"
-                name="idLanguage"
-                required=""
-                onChange={(e)=> setIdLanguage(e.target.value)}
-              />
-              <br />
-              <br />
-              <button className="btn btn-primary" type="submit">
+    <form action="" onSubmit={handleSubmitPostProfile}> 
+      <label htmlFor="profile_name">Nombre del perfil: </label>
+      <input type="text" name="profile_name" id="profile_name" 
+      onInput={(e)=> setNombre(e.target.value)}
+      value={nombre}
+      />
 
-                Añadir
-              </button>
-            </form>
-          </div>
+      <label htmlFor="pin">Introduce el pin: </label>
+      <input type="text" name="pin" id="pin" pattern='[0-9]{4}'
+      onInput={(e)=> setPin(e.target.value)}
+      value={pin}
+      
+      />
+      <button type='submit'>Crear perfil</button>
+    </form>
     
     </>
   )
