@@ -59,6 +59,30 @@ export default function Configuración() {
                     <p>Modificar las películas del catálogo.</p>
                     <NavLink to="/app/movies/update">Modificar películas</NavLink>
                 </section>
+
+                <section className="card-perfil">
+                    <h2>Añadir serie</h2>
+                    <p>Añade una nueva película al catálogo.</p>
+                    <NavLink to="/app/series/create">Añadir película</NavLink>
+                </section>
+
+                <section className="card-perfil">
+                    <h2>Ver serie</h2>
+                    <p>Busca todas las películas del catálogo.</p>
+                    <NavLink to="/app/search">Buscar películas</NavLink>
+                </section>
+
+                <section className="card-perfil">
+                    <h2>Eliminar serie</h2>
+                    <p>Eliminar las series del catálogo.</p>
+                    <NavLink to="/app/series/delete">Eliminar serie</NavLink>
+                </section>
+
+                <section className="card-perfil">
+                    <h2>Actualizar información de serie</h2>
+                    <p>Modificar las serie del catálogo.</p>
+                    <NavLink to="/app/series/update">Modificar serie</NavLink>
+                </section>
                 
                 <section className="card-perfil">
                     <h2>ELIMINAR CUENTA</h2>
