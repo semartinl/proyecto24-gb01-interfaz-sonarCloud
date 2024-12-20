@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import './../css/header.css'
 import UserContext from '../context/UserContext'
+import funcionesComunes from '../Config/funcionesComunes'
 
 export default function Header() {
     const navigate = useNavigate()
@@ -21,14 +22,24 @@ export default function Header() {
         setIsLoggedIn(false)
 
     }
+  
+  const handleSearch = (e)=>{
+    e.preventDefault()
+    const {name, value} = e.target.search
+    const searchParam = new URLSearchParams()
+    searchParam.append("title", value)
+    const query = funcionesComunes.search(e.target)
+    navigate(`/app/search?${searchParam.toString()}`)
+    
+  }
   return (
     <header className='topsidebar-header'>
         <NavLink to={"/app"}>
             <img src='/assets/icons/medifli_M.png' alt="M de mediflii" />
         </NavLink>
 
-        <form action="" method="get" className='search-header'>
-            <input type="text" name="value_contenido" id="value_contenido" className='button-redondeado'/>
+        <form action="" method="get" className='search-header' onSubmit={handleSearch}>
+            <input type="text" name="search" id="search" className='button-redondeado'/>
         </form>
 
         <section className="section-header-topbar">

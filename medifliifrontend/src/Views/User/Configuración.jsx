@@ -27,13 +27,37 @@ export default function Configuración() {
                 <section className="card-perfil">
                     <h2>Ver mi perfil</h2>
                     <p>Mira la información que tienes configurada.</p>
-                    <NavLink to="changeProfile">Cambiar de perfil</NavLink>
+                    <NavLink to="/app/profiles/selectProfile">Cambiar de perfil</NavLink>
                 </section>
 
                 <section className="card-perfil">
                     <h2>Eliminar mi perfil</h2>
                     <p>Mira la información que tienes configurada.</p>
                     <NavLink to="/app/user/config/profiles/deleteProfile">Eliminar perfil</NavLink>
+                </section>
+
+                <section className="card-perfil">
+                    <h2>Añadir película</h2>
+                    <p>Añade una nueva película al catálogo.</p>
+                    <NavLink to="/app/user/config/movies/createMovie">Añadir película</NavLink>
+                </section>
+
+                <section className="card-perfil">
+                    <h2>Ver película</h2>
+                    <p>Busca todas las películas del catálogo.</p>
+                    <NavLink to="/app/search">Buscar películas</NavLink>
+                </section>
+
+                <section className="card-perfil">
+                    <h2>Eliminar película</h2>
+                    <p>Eliminar las películas del catálogo.</p>
+                    <NavLink to="/app/movies/delete">Eliminar películas</NavLink>
+                </section>
+
+                <section className="card-perfil">
+                    <h2>Actualizar información de películas</h2>
+                    <p>Modificar las películas del catálogo.</p>
+                    <NavLink to="/app/movies/update">Modificar películas</NavLink>
                 </section>
                 
                 <section className="card-perfil">

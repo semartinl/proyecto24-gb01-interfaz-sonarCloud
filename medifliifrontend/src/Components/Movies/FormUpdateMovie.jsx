@@ -1,43 +1,78 @@
 import React, { useState } from 'react';
 import moviesServices from '../../Controller/movieController';
+import Loading from '../Loading';
 
 export default function FormUpdateMovie () {
-    const [movieData, setMovieData] = useState({
-        idMovie: '',
-        title: '',
-        duration: '',
-        urlVideo: '',
-        urlTitlePage: '',
-        releaseDate: '',
-        synopsis: '',
-        description: '',
-        isSuscription: '',
-        language: [],
-        category: [],
-        character: [],
-        participant: [],
-        trailer: ''
-    });
-    const [error, setError] = useState(''); // Estado para manejar errores
-    const [successMessage, setSuccessMessage] = useState(''); // Estado para manejar mensajes de éxito
+    const [idMovie, setIdMovie] = useState(0);
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [image, setImage] = useState('')
+    const [releaseDate, setReleaseDate] = useState(null)
+    const [category, setCategory] = useState('')
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setMovieData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
+    // const [movieData, setMovieData] = useState({
+    //     idMovie: updateMovie.idMovie,
+    //     title: updateMovie.title,
+    //     duration: updateMovie.duration,
+    //     urlVideo: updateMovie.urlVideo,
+    //     urlTitlePage: updateMovie.urlTitlePage,
+    //     releaseDate: updateMovie.releaseDate,
+    //     synopsis: updateMovie.synopsis,
+    //     description: updateMovie.description,
+    //     isSuscription: updateMovie.isSuscription,
+    //     language: updateMovie.language,
+    //     category: updateMovie.category,
+    //     character: updateMovie.character,
+    //     participant: updateMovie.participant,
+    //     trailer: updateMovie.trailer
+    // });
+
+    const [movieData, setMovieData] = useState({});
+
+    const [error, setError] = useState(''); // Estado para manejar errores
+    const [loading, setLoading] = useState(false); // Estado para manejar la carga de la página
+    const [successMessage, setSuccessMessage] = useState(''); // Estado para manejar mensajes de éxito
+    
+    
+
+    const handleChangeIdMovie = (e) => {
+        setLoading(true)
+        moviesServices.getMovieById(e.target.value).then((response)=>{
+            setMovieData(response[0])
+            console.log(response)
+        }).catch((err) => {
+            setMovieData({})
+        })
+        .finally(()=> {
+            setLoading(false)
+            
+            })
+        setIdMovie(e.target.value)
+        
     };
 
     const handleArrayChange = (e) => {
         const { name, value } = e.target;
         setMovieData((prevData) => {
-            const updatedArray = [...prevData[name], value];
+            let updatedArray = []
+            if(prevData[name]){
+                updatedArray = [...prevData[name], value];
+            }
+            
             return {
                 ...prevData,
                 [name]: updatedArray
             };
         });
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        
+        setMovieData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
     };
 
     const handleRadioChange = (e) => {
@@ -52,10 +87,12 @@ export default function FormUpdateMovie () {
         e.preventDefault();
         setError('');
         setSuccessMessage('');
-
+        console.log(movieData)
         try {
+
             // Llamada a la función updateMovie con los datos del formulario
-            const response = await moviesServices.updateMovie(movieData);
+            const response = await moviesServices.updateMovie(idMovie, movieData);
+            
             if (response.success) {
                 setSuccessMessage('Película actualizada con éxito');
             } else {
@@ -73,8 +110,6 @@ export default function FormUpdateMovie () {
             <div className="card-body">
                 <form onSubmit={handleFormSubmit}>
 
-                    <input type="hidden" name="_method" value="PUT" />
-
                     <p>Nota: Los parámetros con * son obligatorios</p>
 
                     <span>¿Cuál es el identificador de la película?*</span>
@@ -84,12 +119,13 @@ export default function FormUpdateMovie () {
                         name="idMovie"
                         placeholder="idMovie 1"
                         required
-                        value={movieData.idMovie}
-                        onChange={handleChange}
+                        value={idMovie}
+                        onChange={handleChangeIdMovie}
                     />
                     <br />
-
-                    <span>¿Cuál es el título de la película?</span>
+                    {loading? <Loading/> : 
+                    <>
+                        <span>¿Cuál es el título de la película?</span>
                     <input
                         type="text"
                         className="form-control mb-3"
@@ -182,7 +218,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="language[]"
+                        name="languages"
                         placeholder="idLanguage 1"
                         onChange={handleArrayChange}
                     />
@@ -190,7 +226,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="language[]"
+                        name="languages"
                         placeholder="idLanguage 2"
                         onChange={handleArrayChange}
                     />
@@ -198,7 +234,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="language[]"
+                        name="languages"
                         placeholder="idLanguage 3"
                         onChange={handleArrayChange}
                     />
@@ -208,7 +244,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="category[]"
+                        name="categories"
                         placeholder="idCategory 1"
                         onChange={handleArrayChange}
                     />
@@ -216,7 +252,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="category[]"
+                        name="categories"
                         placeholder="idCategory 2"
                         onChange={handleArrayChange}
                     />
@@ -226,7 +262,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="character[]"
+                        name="characters"
                         placeholder="idCharacter 1"
                         onChange={handleArrayChange}
                     />
@@ -234,7 +270,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="character[]"
+                        name="characters"
                         placeholder="idCharacter 2"
                         onChange={handleArrayChange}
                     />
@@ -242,7 +278,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="character[]"
+                        name="characters"
                         placeholder="idCharacter 3"
                         onChange={handleArrayChange}
                     />
@@ -252,7 +288,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="participant[]"
+                        name="participants"
                         placeholder="idParticipant 1"
                         onChange={handleArrayChange}
                     />
@@ -260,7 +296,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="participant[]"
+                        name="participants"
                         placeholder="idParticipant 2"
                         onChange={handleArrayChange}
                     />
@@ -268,7 +304,7 @@ export default function FormUpdateMovie () {
                     <input
                         type="number"
                         min="1"
-                        name="participant[]"
+                        name="participants"
                         placeholder="idParticipant 3"
                         onChange={handleArrayChange}
                     />
@@ -280,6 +316,8 @@ export default function FormUpdateMovie () {
                         name="trailer"
                         onChange={handleChange}
                     />
+                    </>}
+                    
                     <br />
                     <br />
                     <button className="btn btn-primary" type="submit">Modificar</button>

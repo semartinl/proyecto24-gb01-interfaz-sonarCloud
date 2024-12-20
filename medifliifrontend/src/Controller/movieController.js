@@ -1,28 +1,30 @@
 import axios from 'axios';
 import { constantesComunes } from '../Config/constantesComunes';
 
-const API_URL = constantesComunes.URLContenido;
-const path = "movies";
+const API_URL = constantesComunes.URLContenido; // URL base de tu API
+const path = "movies"; // Endpoint principal
 
 const moviesService = {
   // Crear una nueva película
   addMovie: async (movieData) => {
-    const formData = new URLSearchParams();
-    formData.append("title", movieData.title);
-    formData.append("duration", movieData.duration);
-    formData.append("urlVideo", movieData.urlVideo);
-    formData.append("urlTitlePage", movieData.urlTitlePage);
-    formData.append("releaseDate", movieData.releaseDate);
-    formData.append("synopsis", movieData.synopsis);
-    formData.append("description", movieData.description);
-    formData.append("language[]", movieData.language);
-    formData.append("category[]", movieData.category);
-    formData.append("character[]", movieData.character);
-    formData.append("participant[]", movieData.participant);
-    formData.append("trailer", movieData.trailer);
-    formData.append("isSuscription", movieData.isSuscription);
+    const response = await axios.post(`${API_URL}${path}`, movieData, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    });
+    return response.data;
+  },
 
-    const response = await axios.post(`${API_URL}${path}/addMovie`, formData, {
+  // Eliminar una película por ID
+  deleteMovie: async (idMovie) => {
+    console.log(idMovie)
+    const response = await axios.delete(`${API_URL}${path}/${idMovie}`, {
+      
+    });
+    return response.data;
+  },
+
+  // Actualizar una película por ID
+  updateMovie: async (idMovie, updatedData) => {
+    const response = await axios.put(`${API_URL}${path}/${idMovie}`, updatedData, {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     });
     return response.data;
@@ -36,15 +38,14 @@ const moviesService = {
 
   // Obtener una película por ID
   getMovieById: async (idMovie) => {
-    const response = await axios.get(`${API_URL}${path}/movieFound`, {
-      params: { idMovie },
-    });
+    const response = await axios.get(`${API_URL}${path}/${idMovie}`);
     return response.data;
   },
 
   // Obtener películas por título
   getMovieByTitle: async (title) => {
-    const response = await axios.get(`${API_URL}${path}/title`, {
+    const response = await axios.get(`${API_URL}${path}/title`,  {
+      headers: { 'Content-Type': 'application/json' },
       params: { title },
     });
     return response.data;
@@ -58,7 +59,7 @@ const moviesService = {
     return response.data;
   },
 
-  // Obtener personajes de una película
+  // Obtener los personajes de una película
   getMovieCharacters: async (idMovie) => {
     const response = await axios.get(`${API_URL}${path}/characters`, {
       params: { idMovie },
@@ -66,7 +67,7 @@ const moviesService = {
     return response.data;
   },
 
-  // Obtener participantes de una película
+  // Obtener los participantes de una película
   getMovieParticipants: async (idMovie) => {
     const response = await axios.get(`${API_URL}${path}/participants`, {
       params: { idMovie },
@@ -74,40 +75,31 @@ const moviesService = {
     return response.data;
   },
 
-  // Actualizar información de una película
-  updateMovie: async (movieData) => {
-    const formData = new URLSearchParams();
-    formData.append("_method", "PUT");
-    formData.append("idMovie", movieData.idMovie);
-    formData.append("title", movieData.title);
-    formData.append("duration", movieData.duration);
-    formData.append("urlVideo", movieData.urlVideo);
-    formData.append("urlTitlePage", movieData.urlTitlePage);
-    formData.append("releaseDate", movieData.releaseDate);
-    formData.append("synopsis", movieData.synopsis);
-    formData.append("description", movieData.description);
-    formData.append("language[]", movieData.language);
-    formData.append("category[]", movieData.category);
-    formData.append("character[]", movieData.character);
-    formData.append("participant[]", movieData.participant);
-    formData.append("trailer", movieData.trailer);
-    formData.append("isSuscription", movieData.isSuscription);
-
-    const response = await axios.post(`${API_URL}${path}/updateMovie`, formData, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  // Asociar un trailer a una película
+  putTrailerIntoMovie: async (idMovie, trailerData) => {
+    const response = await axios.put(`${API_URL}${path}/${idMovie}/trailer`, trailerData, {
+      headers: { 'Content-Type': 'application/json' },
     });
     return response.data;
   },
 
-  // Eliminar una película
-  deleteMovie: async (idMovie) => {
-    const formData = new URLSearchParams();
-    formData.append("_method", "DELETE");
-    formData.append("idMovie", idMovie);
+  // Eliminar un trailer asociado a una película
+  deleteTrailerFromMovie: async (idMovie) => {
+    const response = await axios.delete(`${API_URL}${path}/${idMovie}/trailer`);
+    return response.data;
+  },
 
-    const response = await axios.post(`${API_URL}${path}/deleteMovie`, formData, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  // Asociar una categoría a una película
+  putCategoryIntoMovie: async (idMovie, categoryData) => {
+    const response = await axios.put(`${API_URL}/${path}/${idMovie}/categories`, categoryData, {
+      headers: { 'Content-Type': 'application/json' },
     });
+    return response.data;
+  },
+
+  // Eliminar una categoría asociada a una película
+  deleteCategoryFromMovie: async (idMovie) => {
+    const response = await axios.delete(`${API_URL}/${path}/${idMovie}/categories`);
     return response.data;
   },
 };
