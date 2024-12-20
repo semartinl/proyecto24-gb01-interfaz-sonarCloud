@@ -4,13 +4,17 @@ import moviesService from '../Controller/movieController'
 import ListCardMovie from '../Components/Movies/ListCardMovie'
 import Loading from '../Components/Loading'
 import ListSearchMovie from '../Components/Movies/ListSearchMovie'
+import ListCardSeries from '../Components/Series/ListCardSeries'
+import seriesService from '../Controller/seriesController'
 
 export default function Searchs() {
     const [searchParams, setSearchParams] = useSearchParams();
     const title = searchParams.get('title')
     const [movies, setMovies] = useState([])
+    const [series, setSeries] = useState([])
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState('');
+    const [errorMovie, setErrorMovie] = useState('');
+    const [errorSerie, setErrorSerie] = useState('');
     useEffect(()=>{
         if(title){
             setLoading(true)
@@ -18,22 +22,32 @@ export default function Searchs() {
             moviesService.getMovieByTitle(title)
             .then(response => {
                 console.log(response)
-                if(error){
-                    setError('')
+                if(errorMovie){
+                    setErrorMovie('')
                 }
                 setMovies(response)
             })
             .catch(err => {
                 console.log(err)
                 if(err.status === 404){
-                    setError("Película no encontrada")
+                    setErrorMovie("Película no encontrada")
                 }
                 
                 })
-            .finally(()=> {
-                setLoading(false)
+            seriesService.getSeriesByTitle(title).then((response)=>{
+                console.log(response)
+                if(errorSerie){
+                    setErrorSerie('')
+                }
+                setSeries(response)
+            }).catch(err => {
+                console.log(err)
+                if(err.status === 404){
+                    setErrorSerie("Serie no encontrada")
+                }
                 
-            })
+                })
+            
         }
         setLoading(false)
     },[title])
@@ -41,9 +55,15 @@ export default function Searchs() {
     <>
         {loading? <Loading/> :
         <>
-            {error? <p>{error}</p> :
+            {errorMovie? <p>{errorMovie}</p> :
+            <>
             <ListSearchMovie listMovies={movies}/>
+            
+            </>
             }
+            {errorSerie? <p>{errorSerie}</p> :
+            <ListCardSeries listSeries={series}/>
+                }
         </>
             
         }

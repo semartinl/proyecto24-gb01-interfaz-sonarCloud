@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import './../css/header.css'
 import UserContext from '../context/UserContext'
 import funcionesComunes from '../Config/funcionesComunes'
+import SearchSimpleContentForm from './Busqueda/SearchSimpleContentForm'
 
 export default function Header() {
     const navigate = useNavigate()
@@ -28,8 +29,8 @@ export default function Header() {
     const {name, value} = e.target.search
     const searchParam = new URLSearchParams()
     searchParam.append("title", value)
-    const query = funcionesComunes.search(e.target)
-    navigate(`/app/search?${searchParam.toString()}`)
+    funcionesComunes.search(e.target).then((response)=> navigate(`/app/search?${response.toString()}`))
+    
     
   }
   return (
@@ -38,9 +39,10 @@ export default function Header() {
             <img src='/assets/icons/medifli_M.png' alt="M de mediflii" />
         </NavLink>
 
-        <form action="" method="get" className='search-header' onSubmit={handleSearch}>
+        {/* <form action="" method="get" className='search-header' onSubmit={handleSearch}>
             <input type="text" name="search" id="search" className='button-redondeado'/>
-        </form>
+        </form> */}
+        <SearchSimpleContentForm/>
 
         <section className="section-header-topbar">
         {

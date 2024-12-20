@@ -58,6 +58,8 @@ import { ProfileContextProvider } from './context/ProfileContext';
 import DeleteProfile from './Views/User/Profiles/DeleteProfile';
 import Searchs from './Views/Searchs';
 import MovieInfo from './Views/Contenidos/MovieInfo';
+import SerieInfo from './Views/Contenidos/SerieeInfo';
+
 
 
 function App() {
@@ -110,6 +112,12 @@ function App() {
                         <Route path="movies/search" element={<FormGetAllMovies />} />
                         <Route path="movie/:idMovie" element={<MovieInfo />} />
                         <Route path="search" element={<Searchs />} />
+                        {/* Series */}
+                        <Route path="series/create" element={<AddSeriesForm />} />
+                        <Route path="series/delete" element={<DeleteSeries />} />
+                        <Route path="series/update" element={<ModifySeriesForm />} />
+                        <Route path="serie/:idSerie" element={<SerieInfo />} />
+                        <Route exact path="series" element={<AllSeries />} />
                         
                         {/* Languages */}
     <Route path="languages/create" element={<FormCreateLanguage />} />
@@ -153,11 +161,7 @@ function App() {
     <Route path="seasons/update" element={<UpdateSeasonForm />} />
     <Route path="seasons" element={<GetSeasonByIdForm />} />
 
-    {/* Series */}
-    <Route path="series/create" element={<AddSeriesForm />} />
-    <Route path="series/delete" element={<DeleteSeries />} />
-    <Route path="series/update" element={<ModifySeriesForm />} />
-    <Route path="series" element={<AllSeries />} />
+    
 
     {/* Trailers */}
     <Route path="trailers/create" element={<AddTrailer />} />

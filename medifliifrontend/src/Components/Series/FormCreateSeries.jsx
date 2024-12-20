@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import seriesService from '../../Controller/seriesController';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddSeriesForm () {
   // Estado para almacenar los valores del formulario
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
     duration: '',
@@ -23,10 +25,18 @@ export default function AddSeriesForm () {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'seasons[]' || name === 'language[]' || name === 'category[]' || name === 'character[]' || name === 'participant[]') {
-      setFormData({
-        ...formData,
-        [name]: value ? [...formData[name], value] : formData[name],
-      });
+      
+        setFormData((prevData) => {
+            let updatedArray = []
+            if(prevData[name]){
+                updatedArray = [...prevData[name], value];
+            }
+            
+            return {
+                ...prevData,
+                [name]: updatedArray
+            };
+        });
     } else {
       setFormData({
         ...formData,
@@ -41,7 +51,8 @@ export default function AddSeriesForm () {
     try {
       const response = await seriesService.addSeries(formData);
       // Manejar la respuesta aquí
-      console.log('Serie añadida:', response);
+      alert('Pelicula añadida con éxito');
+      navigate("/app/search")
     } catch (error) {
       console.error('Error al añadir la serie:', error);
     }
