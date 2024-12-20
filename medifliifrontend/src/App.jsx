@@ -56,6 +56,8 @@ import { RequireAuth } from './Config/requireAuth';
 import SelectProfile from './Views/User/Profiles/SelectProfile';
 import { ProfileContextProvider } from './context/ProfileContext';
 import DeleteProfile from './Views/User/Profiles/DeleteProfile';
+import Searchs from './Views/Searchs';
+import MovieInfo from './Views/Contenidos/MovieInfo';
 
 
 function App() {
@@ -100,6 +102,14 @@ function App() {
                         <Route path='user/config/editUser' element={<FormUpdateUser/>}/>
                         <Route path='user/config/profiles/deleteProfile' element={<DeleteProfile/>}/>
                         <Route path='user/config/deleteUser' element={<ConfirmDeleteUser/>}/>
+
+                        {/* Movies */}
+                        <Route path="user/config/movies/createMovie" element={<FormCreateMovie />} />
+                        <Route path="movies/delete" element={<FormDeleteMovie />} />
+                        <Route path="movies/update" element={<FormUpdateMovie />} />
+                        <Route path="movies/search" element={<FormGetAllMovies />} />
+                        <Route path="movie/:idMovie" element={<MovieInfo />} />
+                        <Route path="search" element={<Searchs />} />
                         
                         {/* Languages */}
     <Route path="languages/create" element={<FormCreateLanguage />} />
@@ -123,11 +133,7 @@ function App() {
     <Route path="chapters/update" element={<FormUpdateChapter />} />
     <Route path="chapters" element={<FormGetAllCategories />} />
 
-    {/* Movies */}
-    <Route path="movies/create" element={<FormCreateMovie />} />
-    <Route path="movies/delete" element={<FormDeleteMovie />} />
-    <Route path="movies/update" element={<FormUpdateMovie />} />
-    <Route path="movies" element={<FormGetAllMovies />} />
+    
 
     {/* Participants */}
     <Route path="participants/create" element={<FormCreateParticipant />} />

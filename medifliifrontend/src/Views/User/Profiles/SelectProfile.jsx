@@ -14,12 +14,16 @@ export default function SelectProfile() {
   const navigate = useNavigate()
     
   const handleCreateProfile = ()=>{
-    if(listProfiles.length < 4){
       navigate("/app/user/config/profiles/createProfile")
-    }
+    
+    
   }
 
   useEffect(()=>{
+    if(profile){
+      setProfile(null)
+    }
+      
     profilesService.getProfilesByUserId(user.idUser).then((response)=>{
       setListProfiles(response)
       console.log(response)
@@ -31,7 +35,8 @@ export default function SelectProfile() {
     {loading? <Loading/> : 
     <div className="select-profile">
         <ListSelectCardProfile listProfiles={listProfiles}/>
-        <button onClick={handleCreateProfile}>Crear nuevo perfil</button>
+        {listProfiles.length < 4? <button onClick={handleCreateProfile}>Crear nuevo perfil</button> : null}
+        
     </div>
     }
     

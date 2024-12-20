@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import ProfileContext from '../../context/ProfileContext'
 import { useNavigate } from 'react-router-dom'
+import PopOverPinProfile from './PopOverPinProfile'
 
 export default function SelectCardProfile({prof}) {
   const navigate = useNavigate()
@@ -11,9 +12,12 @@ export default function SelectCardProfile({prof}) {
     navigate("/app/user/config")
     
     }
+    
   return (
-    <div className = "card-profile" onClick={handleSelectProfile}>
-      <p>Nombre perfil: {prof.profileName}</p>
+    <div className = "card-profile" >
+      <button popovertarget = {`profileID${prof['id-profile']}`}>Nombre perfil: {prof.profileName}</button>
+      
+      <PopOverPinProfile tryProfile={prof}/>
     </div>
   )
 }
