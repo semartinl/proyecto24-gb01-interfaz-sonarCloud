@@ -6,6 +6,9 @@ import ListCardParticipants from '../../Components/Participants/ListCardParticip
 import Loading from '../../Components/Loading'
 import CardAddFavorites from '../../Components/Favorites/CardAddFavorites'
 import ListCardReview from '../../Components/Reviews/ListCardReview'
+import FormCreateReview from '../../Components/Reviews/FormCreateReview'
+import contentType from '../../Config/constantesComunes'
+import reviewsService from '../../Controller/reviewController'
 
 export default function MovieInfo() {
     const params = useParams()
@@ -17,7 +20,10 @@ export default function MovieInfo() {
     useEffect(()=>{
         moviesService.getMovieById(id).then((response)=>{
             setMovie(response[0])
-            
+            reviewsService.getReviewsByContentId(response[0].idMovie).then((response)=>{
+
+              setReviews(response)
+            })
 
         }).finally(()=> setLoading(false))
     },[id])
@@ -59,8 +65,10 @@ export default function MovieInfo() {
           </section>
 
           <section className='card-content reviews'>
-            <ListCardReview listReviews={reviews}/>
-          </section>
+                          <ListCardReview listReviews={reviews}/>
+          
+                          <FormCreateReview idContent={movie.idMovie} typeContent={contentType.MOVIE_TYPE}/>
+                      </section>
         </div>
     </main>
     </>}

@@ -12,7 +12,7 @@ const reviewsService = {
         formData.append("commentary", review.commentary);
         formData.append("idProfile", review.idProfile);
         formData.append("idContent", review.idContent);
-
+        formData.append("contentType", review.contentType);
         const response = await axios.post(`${API_URL}${path}`, formData, {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         });
@@ -54,6 +54,7 @@ const reviewsService = {
     // Obtener reseñas por ID de contenido
     getReviewsByContentId: async (idContent) => {
         const response = await axios.get(`${API_URL}${path}/contents`, {
+            headers: { 'Content-Type': 'application/json' },
             params: { idContent },
         });
         return response.data;

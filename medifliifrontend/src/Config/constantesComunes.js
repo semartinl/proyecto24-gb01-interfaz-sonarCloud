@@ -6,6 +6,15 @@ export const constantesComunes = {
     "URL_Usuarios" : "http://localhost:8081/Medifli/",
     
 
-    "URLContenido" : "http://localhost:8082/"
+    "URLContenido" : "http://localhost:8082/",
+    "contentType": {
+
+    }
 
 }
+const contentType = Object.freeze ({
+    MOVIE_TYPE : "movie",
+    SERIE_TYPE : "serie",
+    TRAILER_TYPE : "trailer"
+})
+export default contentType

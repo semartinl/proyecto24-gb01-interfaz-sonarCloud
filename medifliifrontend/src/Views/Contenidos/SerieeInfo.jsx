@@ -7,6 +7,8 @@ import ListCardCategory from '../../Components/Categories/ListCardCategory'
 import ListCardParticipants from '../../Components/Participants/ListCardParticipants'
 import ListCardReview from '../../Components/Reviews/ListCardReview'
 import ListCardSeason from '../../Components/Seasons/ListCardSeason'
+import FormCreateReview from '../../Components/Reviews/FormCreateReview'
+import reviewsService from '../../Controller/reviewController'
 
 export default function SerieInfo() {
     const params = useParams()
@@ -22,6 +24,11 @@ export default function SerieInfo() {
             if(response[0].seasons){
                 setNumSeasons(response[0].seasons)
             }
+            console.log(response[0].idSeries)
+            reviewsService.getReviewsByContentId(response[0].idSeries).then((response)=>{
+
+              setReviews(response)
+            })
 
         }).finally(()=> setLoading(false))
     },[id])
@@ -70,6 +77,8 @@ export default function SerieInfo() {
     
               <section className='card-content reviews'>
                 <ListCardReview listReviews={reviews}/>
+
+                <FormCreateReview idContent={serie.idSeries} typeContent={2}/>
               </section>
             </div>
         </main>
