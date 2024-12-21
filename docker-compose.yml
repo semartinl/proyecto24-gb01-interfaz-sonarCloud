@@ -1,0 +1,29 @@
+
+services:
+  react-app:
+    build:
+      context: ./medifliifrontend # Ruta a tu proyecto React
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" # Expone la app en el puerto 3000
+    restart: always
+
+  # microservice1:
+  #   build:
+  #     context: ./microservice1 # Ruta al microservicio 1
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:8080" # Mapea el puerto del microservicio
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=prod # Puedes definir configuraciones específicas
+  #   restart: always
+
+  # microservice2:
+  #   build:
+  #     context: ./microservice2 # Ruta al microservicio 2
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8081:8081" # Mapea el puerto del microservicio
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=prod
+  #   restart: always

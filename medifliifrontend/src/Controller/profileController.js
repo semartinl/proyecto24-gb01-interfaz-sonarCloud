@@ -25,7 +25,7 @@ const profilesService = {
     getProfileById: async (idProfile) => {
         const response = await axios.get(`${API_URL}${path}/${idProfile}`, {
             headers: { 'Content-Type': 'application/json' },
-            withCredentials: true, // Para incluir cookies en la solicitud
+            // withCredentials: true, // Para incluir cookies en la solicitud
         });
         return response.data;
     },

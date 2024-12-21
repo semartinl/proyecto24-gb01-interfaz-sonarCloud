@@ -83,6 +83,12 @@ export default function Configuración() {
                     <p>Modificar las serie del catálogo.</p>
                     <NavLink to="/app/series/update">Modificar serie</NavLink>
                 </section>
+
+                <section className="card-perfil">
+                    <h2>Mis reviews</h2>
+                    <p>Mira las reviews que has creado.</p>
+                    <NavLink to="/app/user/mis-reviews">Mis reviews</NavLink>
+                </section>
                 
                 <section className="card-perfil">
                     <h2>ELIMINAR CUENTA</h2>

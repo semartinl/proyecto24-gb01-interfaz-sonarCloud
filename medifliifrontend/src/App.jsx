@@ -59,6 +59,7 @@ import DeleteProfile from './Views/User/Profiles/DeleteProfile';
 import Searchs from './Views/Searchs';
 import MovieInfo from './Views/Contenidos/MovieInfo';
 import SerieInfo from './Views/Contenidos/SerieeInfo';
+import MisReviews from './Views/User/MisReviews';
 
 
 
@@ -119,6 +120,11 @@ function App() {
                         <Route path="serie/:idSerie" element={<SerieInfo />} />
                         <Route exact path="series" element={<AllSeries />} />
                         
+                        {/* Reviews */}
+                        <Route path="reviews/create" element={<FormCreateReview />} />
+                        <Route path="reviews/delete" element={<DeleteReview />} />
+                        <Route path="reviews/update/:idReview" element={<UpdateReview />} />
+                        <Route path="user/mis-reviews" element={<MisReviews />} />
                         {/* Languages */}
     <Route path="languages/create" element={<FormCreateLanguage />} />
     <Route path="languages/delete" element={<FormDeleteLanguage />} />
@@ -149,11 +155,7 @@ function App() {
     <Route path="participants/update" element={<FormUpdateParticipant />} />
     <Route path="participants" element={<FormGetAllParticipants />} />
 
-    {/* Reviews */}
-    <Route path="reviews/create" element={<FormCreateReview />} />
-    <Route path="reviews/delete" element={<DeleteReview />} />
-    <Route path="reviews/update" element={<UpdateReview />} />
-    <Route path="reviews" element={<GetAllReviews />} />
+    
 
     {/* Seasons */}
     <Route path="seasons/create" element={<AddSeasonForm />} />
