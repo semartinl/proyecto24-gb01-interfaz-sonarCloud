@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import './App.css';
 import LogIn from './Views/login';
@@ -15,7 +15,7 @@ import FormCreateProfile from './Components/Profiles/FormCreateProfile';
 import FormDeleteProfile from './Components/Profiles/FormDeleteProfile';
 import FormUpdateProfile from './Components/Profiles/FormUpdateProfile';
 
-import User from './Views/Estadistica/User';
+
 import FormCreateUser from './Components/Users/FormCreateUser';
 import FormDeleteUser from './Components/Users/FormDeleteUser';
 import FormUpdateUser from './Components/Users/FormUpdateUser';
