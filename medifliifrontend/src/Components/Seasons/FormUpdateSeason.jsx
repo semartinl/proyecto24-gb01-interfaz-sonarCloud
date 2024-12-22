@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import seasonsService from '../../Controller/seasonController';
+import { useNavigate } from 'react-router-dom';
 
 export default function UpdateSeasonForm () {
     const [idSeason, setIdSeason] = useState('');
@@ -10,16 +11,18 @@ export default function UpdateSeasonForm () {
     const [chapterList, setChapterList] = useState([]);
     const [trailer, setTrailer] = useState('');
     const [message, setMessage] = useState('');
+    const [formData, setFormData] = useState({});
+    const navigate = useNavigate();
+          const [error, setError] = useState(''); // Estado para manejar errores
+          const [loading, setLoading] = useState(false); // Estado para manejar la carga de la página
 
     // Maneja los cambios en los campos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name === "idSeason") setIdSeason(value);
-        if (name === "idSeries") setIdSeries(value);
-        if (name === "title") setTitle(value);
-        if (name === "seasonNumber") setSeasonNumber(value);
-        if (name === "totalChapters") setTotalChapters(value);
-        if (name === "trailer") setTrailer(value);
+        setFormData({
+        ...formData,
+        [name]: value,
+      });
     };
 
     const handleChapterChange = (e, index) => {
@@ -28,9 +31,26 @@ export default function UpdateSeasonForm () {
         setChapterList(newChapterList);
     };
 
+    const handleChangeIdSerie = (e) => {
+        setLoading(true)
+        seasonsService.getSeasonById(e.target.value).then((response)=>{
+            setFormData(response[0])
+            console.log(response)
+        }).catch((err) => {
+            setFormData({})
+        })
+        .finally(()=> {
+            setLoading(false)
+            
+            })
+        setIdSeason(e.target.value)
+        
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
+        console.log(formData)
         const updatedFields = {
             idSeries,
             title,
@@ -39,9 +59,9 @@ export default function UpdateSeasonForm () {
             chapterList,
             trailer
         };
-
+        
         try {
-            const data = await seasonsService.updateSeason(idSeason, updatedFields);
+            const data = await seasonsService.updateSeasonForm(idSeason, formData);
             setMessage('Temporada actualizada correctamente');
         } catch (err) {
             setMessage('Hubo un error al actualizar la temporada');
@@ -53,7 +73,7 @@ export default function UpdateSeasonForm () {
             <h3 className="text-center">Modificar temporada</h3>
             <div className="card-body">
                 <form onSubmit={handleSubmit}>
-                    <input type="hidden" name="_method" value="PUT" />
+                    
                     <label>ID</label>
                     <p>Nota: Los parámetros con * son obligatorios</p>
 
@@ -65,7 +85,7 @@ export default function UpdateSeasonForm () {
                         name="idSeason"
                         value={idSeason}
                         placeholder="idSeason 1"
-                        onChange={handleChange}
+                        onChange={handleChangeIdSerie}
                     />
                     <br />
 
@@ -73,7 +93,7 @@ export default function UpdateSeasonForm () {
                     <input
                         type="number"
                         name="idSeries"
-                        value={idSeries}
+                        value={formData.idSeries}
                         placeholder="idSeries 1"
                         onChange={handleChange}
                     />
@@ -84,7 +104,7 @@ export default function UpdateSeasonForm () {
                         type="text"
                         className="form-control mb-3"
                         name="title"
-                        value={title}
+                        value={formData.title}
                         onChange={handleChange}
                     />
                     <br />
@@ -95,7 +115,7 @@ export default function UpdateSeasonForm () {
                         min="0"
                         className="form-control mb-3"
                         name="seasonNumber"
-                        value={seasonNumber}
+                        value={formData.seasonNumber}
                         onChange={handleChange}
                     />
                     <br />
@@ -106,7 +126,7 @@ export default function UpdateSeasonForm () {
                         min="0"
                         className="form-control mb-3"
                         name="totalChapters"
-                        value={totalChapters}
+                        value={formData.totalChapters}
                         onChange={handleChange}
                     />
 
@@ -130,7 +150,7 @@ export default function UpdateSeasonForm () {
                         min="1"
                         name="trailer"
                         placeholder="idTrailer 1"
-                        value={trailer}
+                        value={formData.trailer}
                         onChange={handleChange}
                     />
                     <br />

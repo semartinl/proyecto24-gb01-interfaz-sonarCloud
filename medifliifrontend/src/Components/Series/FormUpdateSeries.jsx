@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import seriesService from '../../Controller/seriesController';
+import Loading from '../Loading';
+import AddButton from '../Buttons/AddButton';
+import { useNavigate } from 'react-router-dom';
+import ListCardSeason from '../Seasons/ListCardSeason';
+import seasonsService from '../../Controller/seasonController';
 
 export default function ModifySeriesForm () {
   const [seriesId, setSeriesId] = useState(null);
+  const [serieData, setSerieData] = useState({});
+  const navigate = useNavigate();
+      const [error, setError] = useState(''); // Estado para manejar errores
+      const [loading, setLoading] = useState(false); // Estado para manejar la carga de la página
+      const [successMessage, setSuccessMessage] = useState(''); // Estado para manejar mensajes de éxito
   // Estado para almacenar los valores del formulario
-  const [formData, setFormData] = useState({
-    idSeries: seriesId || '',
-    title: '',
-    duration: '',
-    isSuscription: 'True', // Valor por defecto
-    seasons: [],
-    urlTitlePage: '',
-    releaseDate: '',
-    synopsis: '',
-    description: '',
-    language: [],
-    category: [],
-    character: [],
-    participant: [],
-    trailer: '',
-  });
+  const [formData, setFormData] = useState({});
+  const [seasons, setSeasons] = useState([]);
+
+  
 
   // Función para manejar cambios en los inputs del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'seasons[]' || name === 'language[]' || name === 'category[]' || name === 'character[]' || name === 'participant[]') {
-      setFormData({
-        ...formData,
-        [name]: value ? [...formData[name], value] : formData[name],
-      });
+      setFormData((prevData) => {
+            let updatedArray = []
+            if(prevData[name]){
+                updatedArray = [...prevData[name], value];
+            }
+            
+            return {
+                ...prevData,
+                [name]: updatedArray
+            };
+        });
     } else {
       setFormData({
         ...formData,
@@ -49,6 +54,22 @@ export default function ModifySeriesForm () {
     }
   };
 
+  const handleChangeIdSerie = (e) => {
+        setLoading(true)
+        seriesService.getSeriesById(e.target.value).then((response)=>{
+            setFormData(response[0])
+            console.log(response)
+        }).catch((err) => {
+            setFormData({})
+        })
+        .finally(()=> {
+            setLoading(false)
+            
+            })
+        setSeriesId(e.target.value)
+        
+    };
+
   return (
     <div className="card">
       <div className="card-header">
@@ -56,7 +77,7 @@ export default function ModifySeriesForm () {
       </div>
       <div className="card-body">
         <form onSubmit={handleSubmit}>
-          <input type="hidden" name="_method" value="PUT" />
+          
 
           <p>Nota: Los parámetros con * son obligatorios</p>
 
@@ -65,13 +86,14 @@ export default function ModifySeriesForm () {
             type="text"
             className="form-control mb-3"
             name="idSeries"
-            value={formData.idSeries}
-            onChange={handleChange}
+            value={seriesId}
+            onChange={handleChangeIdSerie}
             required
             placeholder="idSeries 1"
           />
           <br />
-
+          {loading? <Loading/> : 
+          <>
           <label>Título</label>
           <input
             type="text"
@@ -114,14 +136,17 @@ export default function ModifySeriesForm () {
           <label htmlFor="no">No</label>
           <br />
 
-          <p>Temporadas</p>
+          {/* <p>Temporadas</p>
           <input
             type="number"
             min="1"
             name="seasons[]"
             placeholder="idSeason 1"
             onChange={handleChange}
-          />
+          /> */}
+          {formData.seasons? <ListCardSeason listSeasons={formData.seasons} /> : <p>No existe ninguna temporada</p>}
+          
+          <AddButton handleFunction={()=> navigate(`/app/serie/${formData.idSeries}/addSeason`)} componentName={"season"} />
           <br />
           <input
             type="number"
@@ -289,6 +314,9 @@ export default function ModifySeriesForm () {
           <button className="btn btn-primary" type="submit">
             Actualizar
           </button>
+          </>
+          }
+          
         </form>
       </div>
     </div>

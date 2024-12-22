@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import seasonsService from '../../Controller/seasonController';
+import { useNavigate, useParams } from 'react-router-dom';
+import seriesService from '../../Controller/seriesController';
 
 export default function AddSeasonForm () {
+    const params = useParams()
+    // const idSerie = params.idSerie
     const [formData, setFormData] = useState({
         idSeries: '',
         title: '',
@@ -10,6 +14,7 @@ export default function AddSeasonForm () {
         chapterList: ['', '', ''],
         trailer: ''
     });
+    const navigate = useNavigate()
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -36,18 +41,18 @@ export default function AddSeasonForm () {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await seasonsService.addSeason(formData);
-            setSuccessMessage('Temporada añadida correctamente');
-            setError('');
-            // Limpiar el formulario
-            setFormData({
-                idSeries: '',
-                title: '',
-                seasonNumber: '',
-                totalChapters: '',
-                chapterList: ['', '', ''],
-                trailer: ''
-            });
+            console.log(formData)
+            // formData.idSeries = idSerie
+            const response = await seasonsService.addSeason(formData).then(response => {
+                setSuccessMessage('Temporada añadida correctamente');
+                seriesService.putSeasonIntoSerie(formData.idSeries,response.idSeason).then(response =>{
+                    navigate(`/app/serie/${formData.idSeries}`)
+                })
+            })
+            
+            
+
+            
         } catch (err) {
             setError('Error al añadir la temporada');
             setSuccessMessage('');
@@ -96,7 +101,7 @@ export default function AddSeasonForm () {
                     />
                     <br /><br />
 
-                    <span>¿Cuántos capítulos tiene la temporada?*</span>
+                    {/* <span>¿Cuántos capítulos tiene la temporada?*</span>
                     <input
                         type="number"
                         min="0"
@@ -105,22 +110,9 @@ export default function AddSeasonForm () {
                         value={formData.totalChapters}
                         required
                         onChange={handleChange}
-                    />
+                    /> */}
 
-                    <p>¿Cuáles son los capítulos de la temporada?</p>
-                    {formData.chapterList.map((chapter, index) => (
-                        <div key={index}>
-                            <input
-                                type="number"
-                                min="1"
-                                name={`chapterList[${index}]`}
-                                value={chapter}
-                                placeholder={`idChapter ${index + 1}`}
-                                onChange={(e) => handleChapterListChange(index, e.target.value)}
-                            />
-                            <br />
-                        </div>
-                    ))}
+                    
                     <br />
 
                     <span>¿Qué tráiler se adjunta?</span>

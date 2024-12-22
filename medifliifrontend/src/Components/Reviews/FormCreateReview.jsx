@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import reviewsService from '../../Controller/reviewController';
+import ProfileContext from '../../context/ProfileContext';
+import contentType from '../../Config/constantesComunes';
+import { useNavigate } from 'react-router-dom';
 
-export default function FormCreateReview () {
+export default function FormCreateReview ({idContent, typeContent}) {
+    const navigate = useNavigate()
+    const {profile, setProfile} = useContext(ProfileContext)
     const [review, setReview] = useState({
-        idProfile: '',
-        idContent: '',
+        idProfile: profile['id-profile'],
+        // idContent: (typeContent === contentType.MOVIE_TYPE.valueOf())? content.idMovie: content.idSeries,
+        idContent: idContent,
         rating: '',
-        commentary: ''
+        commentary: '',
+        contentType : (typeContent === contentType.MOVIE_TYPE.valueOf())? 1: 2
     });
 
     const [message, setMessage] = useState('');
@@ -22,30 +29,32 @@ export default function FormCreateReview () {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await reviewsService.addReview(review);
-            setMessage('Review añadida exitosamente.');
-            setReview({
-                idProfile: '',
-                idContent: '',
-                rating: '',
-                commentary: ''
+        console.log(review)
+            reviewsService.addReview(review).then((response)=>{
+                console.log(response);
+                setMessage('Review añadida exitosamente.');
+                navigate(`/app/serie/${idContent}`)
+                setReview({
+                    idProfile: '',
+                    idContent: '',
+                    rating: '',
+                    commentary: '',
+                    contentType : (typeContent === contentType.MOVIE_TYPE.valueOf())? 1: 2
             });
-        } catch (error) {
-            setMessage('Error al añadir la review. Intenta nuevamente.');
-            console.error('Error al añadir la review:', error);
-        }
+            }).catch((error)=>{
+                setMessage('Error al añadir la review. Intenta nuevamente.');
+                console.error('Error al añadir la review:', error);
+            })
+            
+       
     };
 
     return (
         <div className="card">
-            <div className="card-header">
-                <h5 className="text-center">Insertar Review</h5>
-            </div>
             <div className="card-body">
                 {message && <div className="alert alert-info">{message}</div>}
                 <form onSubmit={handleSubmit}>
-                    <label>¿Desde qué perfil estás creando la Review?</label>
+                    {/* <label>¿Desde qué perfil estás creando la Review?</label>
                     <input
                         type="number"
                         className="form-control mb-3"
@@ -62,7 +71,7 @@ export default function FormCreateReview () {
                         value={review.idContent}
                         onChange={handleInputChange}
                         required
-                    />
+                    /> */}
                     <label>¿Qué valoración le pones?</label>
                     <input
                         type="number"

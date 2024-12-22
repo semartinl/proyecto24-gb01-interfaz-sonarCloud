@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import reviewsService from '../../Controller/reviewController';
+import ProfileContext from '../../context/ProfileContext';
 
 export default function GetReviewsByProfile () {
+    const {profile, setProfile} = useContext(ProfileContext)
     const [idProfile, setIdProfile] = useState('');
     const [reviews, setReviews] = useState([]);
     const [message, setMessage] = useState('');

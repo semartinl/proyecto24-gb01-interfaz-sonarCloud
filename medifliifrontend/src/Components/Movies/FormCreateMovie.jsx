@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import moviesServices from '../../Controller/movieController';
+import { useNavigate } from 'react-router-dom';
 
 export default function FormCreateMovie () {
+    const navigate = useNavigate();
     const [movieData, setMovieData] = useState({
         title: '',
         duration: '',
@@ -37,34 +39,33 @@ export default function FormCreateMovie () {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        try {
+        
             const formData = new URLSearchParams();
-            formData.append("title", movieData.title);
-            formData.append("duration", movieData.duration);
-            formData.append("urlVideo", movieData.urlVideo);
-            formData.append("urlTitlePage", movieData.urlTitlePage);
-            formData.append("releaseDate", movieData.releaseDate);
-            formData.append("synopsis", movieData.synopsis);
-            formData.append("description", movieData.description);
-            formData.append("language[]", movieData.language);
-            formData.append("category[]", movieData.category);
-            formData.append("character[]", movieData.character);
-            formData.append("participant[]", movieData.participant);
-            formData.append("trailer", movieData.trailer);
-            formData.append("isSuscription", movieData.isSuscription);
+            formData.append("title", e.target.title.value);
+            formData.append("duration", e.target.duration.value);
+            formData.append("urlVideo", e.target.urlVideo.value);
+            formData.append("urlTitlePage", e.target.urlTitlePage.value);
+            formData.append("releaseDate", e.target.releaseDate.value);
+            formData.append("synopsis", e.target.synopsis.value);
+            formData.append("description", e.target.description.value);
+            // formData.append("language[]", e.target.language.value);
+            // formData.append("category[]", e.target.category.value);
+            // formData.append("character[]", e.target.character.value);
+            // formData.append("participant[]", e.target.participant.value);
+            formData.append("trailer", e.target.trailer.value);
+            formData.append("isSuscription", e.target.isSuscription.value);
+            
+            console.log(formData.toString())
+            moviesServices.addMovie(formData).then((response)=>{
+                alert('Pelicula añadida con éxito');
+                navigate("/app/search")
+            }).catch((er)=>{
+                console.error('Error al añadir la película:', er);
+                alert('Hubo un problema al añadir la película.');
+            })
 
-            const response = await moviesServices.addMovie(formData);
-
-            if (response.data.status === "200 OK") {
-                alert('Categoría añadida con éxito');
-            } else {
-                alert('Error al añadir la película.');
-            }
-        } catch (error) {
-            console.error('Error al añadir la película:', error);
-            alert('Hubo un problema al añadir la película.');
-        }
-    };
+            
+    }
 
     return (
         <div className="card">

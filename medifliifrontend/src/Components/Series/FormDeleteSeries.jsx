@@ -19,7 +19,7 @@ export default function DeleteSeries () {
     try {
       const formData = new URLSearchParams();
       formData.append('idSeries', idSeries);
-      formData.append('_method', 'DELETE');
+      
 
       const response = await seriesService.deleteSeries(idSeries);
       setSuccessMessage(`Serie con ID ${idSeries} eliminada con éxito.`);

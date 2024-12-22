@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import reviewsService from '../../Controller/reviewController';
+import { useNavigate, useParams } from 'react-router-dom';
+import Loading from '../Loading';
 
 export default function UpdateReview () {
-    const [reviewId, setReviewId] = useState('');
+    const params = useParams()
+    const navigate = useNavigate()
+        const [review, setReview] = useState({})
+        const [loading, setLoading] = useState(true)
+        const [error, setError] = useState(null)
+        const reviewId = params.idReview 
     const [updatedFields, setUpdatedFields] = useState({
         rating: '',
         commentary: ''
@@ -10,53 +17,49 @@ export default function UpdateReview () {
 
     const [message, setMessage] = useState('');
 
+    useEffect(()=>{
+        reviewsService.getReviewById(reviewId).then(response =>{
+            setReview(response[0])
+        }).catch(err =>{
+            setError(err)
+        }).finally(()=> setLoading(false))
+    },[reviewId])
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setUpdatedFields({
-            ...updatedFields,
+        setReview({
+            ...review,
             [name]: value
         });
     };
 
-    const handleIdChange = (e) => {
-        setReviewId(e.target.value);
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await reviewsService.updateReview(reviewId, updatedFields);
-            setMessage('Review actualizada exitosamente.');
-            setReviewId('');
-            setUpdatedFields({
-                rating: '',
-                commentary: ''
-            });
-        } catch (error) {
-            setMessage('Error al actualizar la review. Intenta nuevamente.');
-            console.error('Error al actualizar la review:', error);
-        }
+        
+            reviewsService.updateReview(reviewId, review).then(response =>{
+                setMessage('Review actualizada exitosamente.');
+                navigate("/app/user/mis-reviews")
+            }).catch(error =>{
+                setMessage('Error al actualizar la review. Intenta nuevamente.');
+                console.error('Error al actualizar la review:', error);
+            })
+            
+        
     };
 
     return (
-        <div className="card">
+        <>
+        {loading? <Loading/> :
+            <div className="card">
             <div className="card-header">
                 <h5 className="text-center">Modificar Review</h5>
             </div>
             <div className="card-body">
                 {message && <div className="alert alert-info">{message}</div>}
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="idReview">¿Qué id tiene la Review que quieres modificar?</label>
-                    <input
-                        type="number"
-                        id="idReview"
-                        name="idReview"
-                        value={reviewId}
-                        onChange={handleIdChange}
-                        required
-                        className="form-control mb-3"
-                    />
+                    
                     <label>¿Quieres cambiar la valoración?</label>
                     <input
                         type="number"
@@ -64,7 +67,7 @@ export default function UpdateReview () {
                         name="rating"
                         min="1"
                         max="10"
-                        value={updatedFields.rating}
+                        value={review.rating}
                         onChange={handleInputChange}
                     />
                     <label>¿Quieres cambiar el comentario?</label>
@@ -72,7 +75,7 @@ export default function UpdateReview () {
                         type="text"
                         className="form-control mb-3"
                         name="commentary"
-                        value={updatedFields.commentary}
+                        value={review.commentary}
                         onChange={handleInputChange}
                     />
                     <button className="btn btn-primary" type="submit">
@@ -81,5 +84,8 @@ export default function UpdateReview () {
                 </form>
             </div>
         </div>
+        }
+        
+        </>
     );
 };
