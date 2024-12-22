@@ -102,6 +102,36 @@ const seriesService = {
     const response = await axios.delete(`${API_URL}${path}/${idSeries}`);
     return response.data;
   },
+  putCategoryIntoSerie: async(idSeries, idCategory)=>{
+    const response = await axios.put(`${API_URL}${path}/${idSeries}/categories`, null, {
+                params: { idCategory }
+            });
+            return response.data;
+  },
+  putCharacterIntoSerie: async(idSeries, idCharacter)=>{
+    const response = await axios.put(`${API_URL}${path}/${idSeries}/characters`, null, {
+      params: { idCharacter }
+      });
+    return response.data
+    },
+    putParticipantIntoSerie: async(idSeries, idParticipant)=>{
+      const response = await axios.put(`${API_URL}${path}/${idSeries}/participants`, null, {
+        params: { idParticipant }
+        });
+        return response.data
+        },
+  putSeasonIntoSerie: async(idSeries, idSeason)=>{
+    const response = await axios.put(`${API_URL}${path}/${idSeries}/seasons`, {
+                params: { idSeason }
+            });
+            return response.data;
+            },
+  deleteSeasonIntoSerie: async (idSeries, idSeason) =>{
+    const response = await axios.delete(`${API_URL}${path}/${idSeries}/seasons`, {
+                params: { idSeason }
+            });
+      return response.data;
+  }
 };
 
 export default seriesService;

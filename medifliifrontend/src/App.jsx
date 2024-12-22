@@ -60,6 +60,7 @@ import Searchs from './Views/Searchs';
 import MovieInfo from './Views/Contenidos/MovieInfo';
 import SerieInfo from './Views/Contenidos/SerieeInfo';
 import MisReviews from './Views/User/MisReviews';
+import FormAddSeasonIntoSerie from './Components/Series/FormAddSeasonIntoSerie';
 
 
 
@@ -119,12 +120,23 @@ function App() {
                         <Route path="series/update" element={<ModifySeriesForm />} />
                         <Route path="serie/:idSerie" element={<SerieInfo />} />
                         <Route exact path="series" element={<AllSeries />} />
+
+                        {/* Seasons */}
+                        <Route path="serie/:idSerie/addSeason" element={<FormAddSeasonIntoSerie />} />
+                        <Route path="seasons/add" element={<AddSeasonForm />} />
+                        <Route path="seasons/delete" element={<DeleteSeasonForm />} />
+                        <Route path="seasons/update" element={<UpdateSeasonForm />} />
+                        <Route path="seasons" element={<GetSeasonByIdForm />} />
                         
                         {/* Reviews */}
                         <Route path="reviews/create" element={<FormCreateReview />} />
                         <Route path="reviews/delete" element={<DeleteReview />} />
                         <Route path="reviews/update/:idReview" element={<UpdateReview />} />
                         <Route path="user/mis-reviews" element={<MisReviews />} />
+
+
+
+                        
                         {/* Languages */}
     <Route path="languages/create" element={<FormCreateLanguage />} />
     <Route path="languages/delete" element={<FormDeleteLanguage />} />
@@ -157,11 +169,7 @@ function App() {
 
     
 
-    {/* Seasons */}
-    <Route path="seasons/create" element={<AddSeasonForm />} />
-    <Route path="seasons/delete" element={<DeleteSeasonForm />} />
-    <Route path="seasons/update" element={<UpdateSeasonForm />} />
-    <Route path="seasons" element={<GetSeasonByIdForm />} />
+    
 
     
 

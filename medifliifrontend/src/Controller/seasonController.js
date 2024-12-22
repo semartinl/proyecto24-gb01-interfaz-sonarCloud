@@ -1,84 +1,141 @@
-import axios from 'axios';
-import { constantesComunes } from '../Config/constantesComunes';
+import axios from "axios";
+import { constantesComunes } from "../Config/constantesComunes";
 
-const API_URL = constantesComunes.URLContenido;
-const path = "seasons";
+const API_URL = constantesComunes.URLContenido; // URL base del microservicio
+const path = "seasons"; // Ruta específica para temporadas
 
 const seasonsService = {
-    // Crear una nueva temporada
-    addSeason: async (season) => {
-        const formData = new URLSearchParams();
-        formData.append("idSeries", season.idSeries);
-        formData.append("title", season.title);
-        formData.append("seasonNumber", season.seasonNumber);
-        formData.append("totalChapters", season.totalChapters);
-        formData.append("chapterList[]", season.chapterList);
-        formData.append("character[]", season.character);
-        formData.append("participant[]", season.participant);
-        formData.append("trailer", season.trailer);
 
-        const response = await axios.post(`${API_URL}${path}/addSeason`, formData, {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        });
-        return response.data;
-    },
+  // Añadir una temporada
+  addSeason: async (seasonData) => {
+    const formData = new URLSearchParams();
+    formData.append("idSeries", seasonData.idSeries);
+    formData.append("title", seasonData.title);
+    formData.append("seasonNumber", seasonData.seasonNumber);
 
-    // Obtener una temporada por ID
-    getSeasonById: async (idSeason) => {
-        const response = await axios.get(`${API_URL}${path}/seasonFound`, {
-            params: { idSeason },
-        });
-        return response.data;
-    },
+    const response = await axios.post(`${API_URL}${path}`, formData, {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+    return response.data;
+  },
 
-    // Actualizar una temporada por ID
-    updateSeason: async (idSeason, updatedFields) => {
-        const formData = new URLSearchParams();
-        formData.append("_method", "PUT");
-        formData.append("idSeason", idSeason);
+  // Actualizar una temporada por formulario
+  updateSeasonForm: async (idSeason,seasonData) => {
+    const formData = new URLSearchParams();
+    
+    formData.append("idSeason", idSeason);
+    formData.append("idSeries", seasonData.idSeries);
+    formData.append("title", seasonData.title);
+    formData.append("seasonNumber", seasonData.seasonNumber);
 
-        if (updatedFields.idSeries) formData.append("idSeries", updatedFields.idSeries);
-        if (updatedFields.title) formData.append("title", updatedFields.title);
-        if (updatedFields.seasonNumber) formData.append("seasonNumber", updatedFields.seasonNumber);
-        if (updatedFields.totalChapters) formData.append("totalChapters", updatedFields.totalChapters);
-        if (updatedFields.chapterList) updatedFields.chapterList.forEach(chapter => formData.append("chapterList[]", chapter));
-        if (updatedFields.character) updatedFields.character.forEach(char => formData.append("character[]", char));
-        if (updatedFields.participant) updatedFields.participant.forEach(part => formData.append("participant[]", part));
-        if (updatedFields.trailer) formData.append("trailer", updatedFields.trailer);
+    const response = await axios.post(`${API_URL}${path}`, formData, {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+    return response.data;
+  },
 
-        const response = await axios.post(`${API_URL}${path}/updateSeason`, formData, {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        });
-        return response.data;
-    },
+  // Actualizar una temporada directamente
+  updateSeason: async (idSeason, updateData) => {
+    const response = await axios.put(`${API_URL}${path}/${idSeason}`, updateData,{
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    });
+    return response.data;
+  },
 
-    // Eliminar una temporada por ID
-    deleteSeason: async (idSeason) => {
-        const formData = new URLSearchParams();
-        formData.append("_method", "DELETE");
-        formData.append("idSeason", idSeason);
+  // Eliminar una temporada
+  deleteSeason: async (idSeason) => {
+    const formData = new URLSearchParams();
+    formData.append("idSeason", idSeason);
 
-        const response = await axios.post(`${API_URL}${path}/deleteSeason`, formData, {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        });
-        return response.data;
-    },
+    const response = await axios.delete(`${API_URL}${path}/${idSeason}`,
+      // headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    );
+    return response.data;
+  },
 
-    // Obtener los personajes de una temporada por ID
-    getSeasonCharacters: async (idSeason) => {
-        const response = await axios.get(`${API_URL}${path}/characters`, {
-            params: { idSeason },
-        });
-        return response.data;
-    },
+  // Obtener temporada por ID
+  getSeasonById: async (idSeason) => {
+    const response = await axios.get(`${API_URL}${path}/${idSeason}`);
+    return response.data;
+  },
 
-    // Obtener los participantes de una temporada por ID
-    getSeasonParticipants: async (idSeason) => {
-        const response = await axios.get(`${API_URL}${path}/participants`, {
-            params: { idSeason },
-        });
-        return response.data;
-    }
+  // Obtener capítulos de una temporada
+  getSeasonChapters: async (idSeason) => {
+    const response = await axios.get(`${API_URL}${path}/chapters`, {
+      params: { idSeason },
+    });
+    return response.data;
+  },
+
+  // Obtener personajes de una temporada
+  getSeasonCharacters: async (idSeason) => {
+    const response = await axios.get(`${API_URL}${path}/characters`, {
+      params: { idSeason },
+    });
+    return response.data;
+  },
+
+  // Obtener participantes de una temporada
+  getSeasonParticipants: async (idSeason) => {
+    const response = await axios.get(`${API_URL}${path}/participants`, {
+      params: { idSeason },
+    });
+    return response.data;
+  },
+
+  // Asociar un tráiler a una temporada
+  addTrailerToSeason: async (idSeason, idTrailer) => {
+    const response = await axios.put(`${API_URL}${path}/${idSeason}/trailer`, {
+      idTrailer,
+    });
+    return response.data;
+  },
+
+  // Eliminar un tráiler de una temporada
+  removeTrailerFromSeason: async (idSeason) => {
+    const response = await axios.delete(`${API_URL}${path}/${idSeason}/trailer`);
+    return response.data;
+  },
+
+  // Asociar una categoría a una temporada
+  addCategoryToSeason: async (idSeason, idCategory) => {
+    const response = await axios.put(`${API_URL}${path}/${idSeason}/category`, {
+      idCategory,
+    });
+    return response.data;
+  },
+
+  // Eliminar una categoría de una temporada
+  removeCategoryFromSeason: async (idSeason, idCategory) => {
+    const response = await axios.delete(`${API_URL}${path}/${idSeason}/category`, {
+      data: { idCategory },
+    });
+    return response.data;
+  },
+
+  // Asociar un capítulo a una temporada
+  addChapterToSeason: async (idSeason, idChapter) => {
+    const response = await axios.put(`${API_URL}${path}/${idSeason}/chapter`, {
+      idChapter,
+    });
+    return response.data;
+  },
+
+  // Eliminar un capítulo de una temporada
+  removeChapterFromSeason: async (idSeason, idChapter) => {
+    const response = await axios.delete(`${API_URL}${path}/${idSeason}/chapter`, {
+      data: { idChapter },
+    });
+    return response.data;
+  },
+
+  // Actualizar la serie asociada a una temporada
+  updateSeasonSeries: async (idSeason, idSeries) => {
+    const response = await axios.put(`${API_URL}${path}/${idSeason}/series`, {
+      idSeries,
+    });
+    return response.data;
+  },
 };
 
 export default seasonsService;
