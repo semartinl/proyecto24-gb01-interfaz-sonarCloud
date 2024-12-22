@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import seriesService from '../../Controller/seriesController';
 import Loading from '../Loading';
+import AddButton from '../Buttons/AddButton';
+import { useNavigate } from 'react-router-dom';
+import ListCardSeason from '../Seasons/ListCardSeason';
+import seasonsService from '../../Controller/seasonController';
 
 export default function ModifySeriesForm () {
   const [seriesId, setSeriesId] = useState(null);
   const [serieData, setSerieData] = useState({});
-  
+  const navigate = useNavigate();
       const [error, setError] = useState(''); // Estado para manejar errores
       const [loading, setLoading] = useState(false); // Estado para manejar la carga de la página
       const [successMessage, setSuccessMessage] = useState(''); // Estado para manejar mensajes de éxito
   // Estado para almacenar los valores del formulario
   const [formData, setFormData] = useState({});
+  const [seasons, setSeasons] = useState([]);
+
+  
 
   // Función para manejar cambios en los inputs del formulario
   const handleChange = (e) => {
@@ -129,14 +136,17 @@ export default function ModifySeriesForm () {
           <label htmlFor="no">No</label>
           <br />
 
-          <p>Temporadas</p>
+          {/* <p>Temporadas</p>
           <input
             type="number"
             min="1"
             name="seasons[]"
             placeholder="idSeason 1"
             onChange={handleChange}
-          />
+          /> */}
+          {formData.seasons? <ListCardSeason listSeasons={formData.seasons} /> : <p>No existe ninguna temporada</p>}
+          
+          <AddButton handleFunction={()=> navigate(`/app/serie/${formData.idSeries}/addSeason`)} componentName={"season"} />
           <br />
           <input
             type="number"

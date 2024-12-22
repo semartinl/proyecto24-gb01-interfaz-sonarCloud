@@ -56,20 +56,20 @@ export default function Configuración() {
 
                 <section className="card-perfil">
                     <h2>Actualizar información de películas</h2>
-                    <p>Modificar las películas del catálogo.</p>
+                    <p>Modificar las series del catálogo.</p>
                     <NavLink to="/app/movies/update">Modificar películas</NavLink>
                 </section>
 
                 <section className="card-perfil">
                     <h2>Añadir serie</h2>
-                    <p>Añade una nueva película al catálogo.</p>
+                    <p>Añade una nueva serie al catálogo.</p>
                     <NavLink to="/app/series/create">Añadir película</NavLink>
                 </section>
 
                 <section className="card-perfil">
                     <h2>Ver serie</h2>
-                    <p>Busca todas las películas del catálogo.</p>
-                    <NavLink to="/app/search">Buscar películas</NavLink>
+                    <p>Busca todas las series del catálogo.</p>
+                    <NavLink to="/app/search">Buscar serie</NavLink>
                 </section>
 
                 <section className="card-perfil">
@@ -89,6 +89,25 @@ export default function Configuración() {
                     <p>Mira las reviews que has creado.</p>
                     <NavLink to="/app/user/mis-reviews">Mis reviews</NavLink>
                 </section>
+                <section className="card-perfil">
+                    <h2>Eliminar season</h2>
+                    <p>Elimina las seasons que quieras.</p>
+                    <NavLink to="/app/seasons/delete">Eliminar seasons</NavLink>
+                </section>
+                <section className="card-perfil">
+                    <h2>Modificar season</h2>
+                    <p>Modificar las seasons que quieras.</p>
+                    <NavLink to="/app/seasons/update">Modificar seasons</NavLink>
+                </section>
+                <section className="card-perfil">
+                    <h2>Crear season</h2>
+                    <p>Crear las seasons que quieras.</p>
+                    <NavLink to="/app/seasons/add">Crear seasons</NavLink>
+                </section>
+
+
+
+                
                 
                 <section className="card-perfil">
                     <h2>ELIMINAR CUENTA</h2>

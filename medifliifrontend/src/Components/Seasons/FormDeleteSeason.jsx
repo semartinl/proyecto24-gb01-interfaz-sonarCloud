@@ -27,7 +27,7 @@ export default function DeleteSeasonForm () {
             <h3 className="text-center">Eliminar temporada</h3>
             <div className="card-body">
                 <form onSubmit={handleSubmit}>
-                    <input type="hidden" name="_method" value="DELETE" />
+                    
                     <span>ID</span>
                     <input
                         type="text"
