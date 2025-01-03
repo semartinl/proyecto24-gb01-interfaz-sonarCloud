@@ -38,7 +38,7 @@ import FormGetAllParticipants from './Components/Participants/FormGetAllParticip
 import FormCreateReview from './Components/Reviews/FormCreateReview';
 import DeleteReview from './Components/Reviews/FormDeleteReview';
 import UpdateReview from './Components/Reviews/FormUpdateReview';
-import GetAllReviews from './Components/Reviews/FormGetAllReviews';
+
 import AddSeasonForm from './Components/Seasons/FormCreateSeason';
 import DeleteSeasonForm from './Components/Seasons/FormDeleteSeason';
 import UpdateSeasonForm from './Components/Seasons/FormUpdateSeason';
