@@ -17,7 +17,7 @@ export default function FormDeleteLanguage() {
           </div>
           <div className="card-body">
             <form onSubmit={handleDeleteLanguage}>
-              <label>¿Qué id tiene el Language que deseas borrar?</label>
+              <label htmlFor="idLanguage">¿Qué id tiene el Language que deseas borrar?</label>
               <input
                 type="number"
                 id="idLanguage"
@@ -31,6 +31,7 @@ export default function FormDeleteLanguage() {
                 
                 Borrar
               </button>
+                {error? <p>{error}</p>}
             </form>
           </div>
     </>
