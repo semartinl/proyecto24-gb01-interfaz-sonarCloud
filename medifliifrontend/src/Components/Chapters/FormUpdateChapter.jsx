@@ -47,7 +47,7 @@ export default function FormUpdateChapter () {
                     <p>Nota: Los parámetros con * son obligatorios</p>
 
                     <div className="form-group">
-                        <label>ID*</label>
+                        <label htmlFor='idChapter'>ID*</label>
                         <input
                             type="number"
                             min="1"
@@ -61,7 +61,7 @@ export default function FormUpdateChapter () {
                     </div>
 
                     <div className="form-group">
-                        <label>¿Cuál es el título del capítulo?</label>
+                        <label htmlFor='title'>¿Cuál es el título del capítulo?</label>
                         <input
                             type="text"
                             className="form-control mb-3"
@@ -72,7 +72,7 @@ export default function FormUpdateChapter () {
                     </div>
 
                     <div className="form-group">
-                        <label>¿Cuál es el número del capítulo en la temporada?</label>
+                        <label htmlFor='chapterNumber'>¿Cuál es el número del capítulo en la temporada?</label>
                         <input
                             type="number"
                             className="form-control mb-3"
@@ -83,7 +83,7 @@ export default function FormUpdateChapter () {
                     </div>
 
                     <div className="form-group">
-                        <label>¿Cuál es la duración (en minutos) del capítulo?</label>
+                        <label htmlFor='duration'>¿Cuál es la duración (en minutos) del capítulo?</label>
                         <input
                             type="number"
                             min="0"
@@ -95,7 +95,7 @@ export default function FormUpdateChapter () {
                     </div>
 
                     <div className="form-group">
-                        <label>¿Cuál es la URL del capítulo?</label>
+                        <label htmlFor='urlVideo'>¿Cuál es la URL del capítulo?</label>
                         <input
                             type="url"
                             className="form-control mb-3"
